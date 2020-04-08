@@ -1,0 +1,27 @@
+from flask import Flask, render_template, Blueprint, request
+from flask_restplus import Api, Resource
+
+app = Flask(__name__)
+blueprint = Blueprint('api', __name__, url_prefix='/api')
+api = Api(blueprint)
+app.register_blueprint(blueprint)
+
+# Get react application
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+# API Controllers
+# imports for api controllers
+import random, math
+
+
+@api.route("/number/<int:seed>")
+class GetNumber(Resource):
+    def get(self, seed):
+        """Get a random number for a given number"""
+        random.seed(seed)
+        return {seed: math.floor(random.uniform(0, 10))}
