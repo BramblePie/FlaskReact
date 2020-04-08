@@ -15,7 +15,6 @@ def home():
 
 
 # API Controllers
-# imports for api controllers
 import random, math
 
 
