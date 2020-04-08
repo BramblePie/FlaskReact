@@ -22,6 +22,6 @@ import random, math
 @api.route("/number/<int:seed>")
 class GetNumber(Resource):
     def get(self, seed):
-        """Get a random number for a given number"""
+        """Get a random number for any given number"""
         random.seed(seed)
         return {seed: math.floor(random.uniform(0, 10))}
