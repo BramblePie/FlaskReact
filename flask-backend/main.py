@@ -2,6 +2,7 @@ from flask import Flask, render_template, Blueprint, request
 from flask_restplus import Api, Resource
 
 from notebooks.data_prep import *
+
 print("modeling")
 print("prep")
 
