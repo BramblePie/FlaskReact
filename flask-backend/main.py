@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Blueprint, request
 from flask_restplus import Api, Resource
 
-from notebooks.data_prep import *
+from notebooks.data_prep import get_gem_min_inw
 
 print("modeling")
 print("prep")
@@ -30,3 +30,10 @@ class GetNumber(Resource):
         """Get a random number for any given number"""
         random.seed(seed)
         return {seed: math.floor(random.uniform(0, 10))}
+
+
+@api.route("/gemeente/<int:inwoners>")
+class AantalInwoners(Resource):
+    def get(self, inwoners):
+        """Get all gemeentes met minimaal zoveel inwoners"""
+        return get_gem_min_inw(inwoners)
