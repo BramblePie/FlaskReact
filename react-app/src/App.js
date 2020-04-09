@@ -8,6 +8,7 @@ function App() {
 	const [num, setNum] = useState(0);
 
 	useEffect(() => {
+		// Haal data uit Flask API
 		let res = fetch(`http://127.0.0.1/api/number/${count}`)
 			.then((response) => {
 				return response.json();

@@ -1,6 +1,10 @@
 from flask import Flask, render_template, Blueprint, request
 from flask_restplus import Api, Resource
 
+
+print("modeling")
+print("prep")
+
 print("Starting flask server")
 app = Flask(__name__)
 blueprint = Blueprint('api', __name__, url_prefix='/api')
