@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import TestBlock from './components/TestBlock';
+import Clock from './components/Clock';
 
 function App() {
 
@@ -22,9 +23,12 @@ function App() {
 
 	}, [count]);
 
+	const getStyle = () => ({ color: num % 2 == 0 ? '#800080' : '#FFFFFF' });
+
 	return (
 		<div className="App">
 			<header className="App-header">
+				<Clock />
 				<img src={logo} className="App-logo" alt="logo" />
 				<p>
 					Edit <code>src/App.js</code> and save to reload.
@@ -32,7 +36,7 @@ function App() {
 				<button onClick={() => setCount(count + 1)}>
 					Clicked {count} times
       			</button>
-				<p>
+				<p style={getStyle()}>
 					{num}
 				</p>
 				<TestBlock />
