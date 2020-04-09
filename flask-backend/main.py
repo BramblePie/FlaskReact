@@ -1,7 +1,6 @@
 from flask import Flask, render_template, Blueprint, request
 from flask_restplus import Api, Resource
 
-
 print("modeling")
 print("prep")
 

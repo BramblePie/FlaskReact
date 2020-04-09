@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import TestBlock from './components/TestBlock';
+
 function App() {
 
 	const [count, setCount] = useState(0);
@@ -33,6 +35,7 @@ function App() {
 				<p>
 					{num}
 				</p>
+				<TestBlock />
 			</header>
 		</div>
 	);
