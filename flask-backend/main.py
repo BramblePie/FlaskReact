@@ -1,6 +1,7 @@
 from flask import Flask, render_template, Blueprint, request
 from flask_restplus import Api, Resource
 
+from notebooks.data_prep import *
 print("modeling")
 print("prep")
 
@@ -10,11 +11,11 @@ blueprint = Blueprint('api', __name__, url_prefix='/api')
 api = Api(blueprint)
 app.register_blueprint(blueprint)
 
-# Get react application
 
-
+# Single page application
 @app.route("/")
 def home():
+    # Alles wordt gecompiled in één pagina: index.html
     return render_template("index.html")
 
 
