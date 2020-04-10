@@ -152,5 +152,5 @@ dmypy.json
 .pyre/
 
 # Raw data
+.raw-data
 raw-data/
-.raw-data/
