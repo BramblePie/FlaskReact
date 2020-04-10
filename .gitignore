@@ -150,7 +150,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Raw data
-raw-data/
-.raw-data/
