@@ -154,6 +154,3 @@ dmypy.json
 # Raw data
 .raw-data
 raw-data/
-
-# vs code settings
-.vscode/settings.json
