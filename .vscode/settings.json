@@ -1,4 +1,0 @@
-{
-    "python.pythonPath": ".env\\python.exe",
-    "python.formatting.provider": "yapf"
-}
