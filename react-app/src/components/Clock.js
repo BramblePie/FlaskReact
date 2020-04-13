@@ -6,8 +6,15 @@ function Clock() {
 
     setInterval(() => setDate(new Date()), 1000);
 
+
+    const makePurple = () => (
+        {
+            color: '#800080'
+        }
+    );
+
     return (
-        <div>
+        <div style={makePurple()}>
             <h2>{date.toLocaleTimeString()}</h2>
         </div>
     );
