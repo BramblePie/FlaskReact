@@ -152,8 +152,7 @@ dmypy.json
 .pyre/
 
 # Raw data
-.raw-data
-raw-data/
+raw-data/*.zip
 
 # vs code settings
 .vscode/settings.json
