@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 import Clock from './components/Clock';
+import Gemeente from './components/Gemeente';
 
 function App() {
 
 	const [count, setCount] = useState(0);
 	const [num, setNum] = useState(0);
 
-	const [gemeentes, setGemeentes] = useState();
+	const [gemeentes, setGemeentes] = useState([]);
 	const [inwCount, setInwCount] = useState(500000);
 
 	useEffect(() => {
@@ -16,8 +17,6 @@ function App() {
 			.then((response) => {
 				return response.json();
 			}).then((data) => {
-				console.log(data);
-				console.log(data[count]);
 				setNum(data[count]);
 			});
 
@@ -30,8 +29,8 @@ function App() {
 				return response.json();
 			}).then((data) => {
 				setGemeentes(Object.entries(data));
-				console.log(gemeentes);
 			});
+
 	}, [inwCount])
 
 	const getStyle = () => (
@@ -44,6 +43,11 @@ function App() {
 		<div >
 			<Clock />
 			<input type="number" min="0" step="1000" value={inwCount} onChange={(e) => setInwCount(e.target.value)} />
+			<div>
+				{gemeentes.map((gemeente) => (
+					<Gemeente info={gemeente} />
+				))}
+			</div>
 			<div>
 				<button onClick={() => setCount(count + 1)}>
 					Clicked {count} times

@@ -10,7 +10,8 @@ function Clock() {
     const makePurple = () => (
         {
             color: '#800080'
-        });
+        }
+    );
 
     return (
         <div style={makePurple()}>
