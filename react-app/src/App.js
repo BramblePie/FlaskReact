@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import TestBlock from './components/TestBlock';
 import Clock from './components/Clock';
 
 function App() {
@@ -8,9 +7,12 @@ function App() {
 	const [count, setCount] = useState(0);
 	const [num, setNum] = useState(0);
 
+	const [gemeentes, setGemeentes] = useState();
+	const [inwCount, setInwCount] = useState(500000);
+
 	useEffect(() => {
 		// Haal data uit Flask API
-		let res = fetch(`http://127.0.0.1/api/number/${count}`)
+		fetch(`http://127.0.0.1/api/number/${count}`)
 			.then((response) => {
 				return response.json();
 			}).then((data) => {
@@ -21,21 +23,35 @@ function App() {
 
 	}, [count]);
 
-	const getStyle = () => ({ color: num % 2 == 0 ? '#800080' : '#FFFFFF' });
+	useEffect(() => {
+		// Haal gemeentes op uit Flask API
+		fetch(`http://127.0.0.1/api/gemeente/${inwCount}`)
+			.then((response) => {
+				return response.json();
+			}).then((data) => {
+				setGemeentes(Object.entries(data));
+				console.log(gemeentes);
+			});
+	}, [inwCount])
+
+	const getStyle = () => (
+		{
+			color: num % 2 == 0 ? '#800080' : '#FFFFFF'
+		}
+	);
 
 	return (
 		<div >
 			<Clock />
-			<p>
-				Edit <code>src/App.js</code> and save to reload.
-        		</p>
-			<button onClick={() => setCount(count + 1)}>
-				Clicked {count} times
+			<input type="number" min="0" step="1000" value={inwCount} onChange={(e) => setInwCount(e.target.value)} />
+			<div>
+				<button onClick={() => setCount(count + 1)}>
+					Clicked {count} times
       			</button>
-			<p style={getStyle()}>
-				{num}
-			</p>
-			<TestBlock />
+				<p style={getStyle()}>
+					{num}
+				</p>
+			</div>
 		</div>
 	);
 }
