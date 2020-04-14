@@ -20,3 +20,7 @@ Seyfullah
 - Inwonersaantal
 - Werkgelegenheid sectoren per gemeente.
 
+Onderdelen van data understanding:
+- Data understanding
+- Beschrijven van de data
+- Data exploratie
