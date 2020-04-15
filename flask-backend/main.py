@@ -38,3 +38,5 @@ class AantalInwoners(Resource):
     def get(self, inwoners):
         """Get all gemeentes met minimaal zoveel inwoners"""
         return notebook.get_gem_min_inw(inwoners)
+
+        boeh
