@@ -1,5 +1,7 @@
 import pandas as pd
 import geopandas as gpd
+import matplotlib.pyplot as plt
+from descartes import PolygonPatch
 from pandas.io.json import json_normalize
 from SPARQLWrapper import SPARQLWrapper, JSON
 from owslib.wfs import WebFeatureService
