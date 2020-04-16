@@ -43,7 +43,7 @@ def wfs_info(wfs_url):
     # Wfs versie
     print(wfs.version)
     # Beschikbare methodes
-    print([operation.name for operation in wfs.operation])
+    # print([operation.name for operation in wfs.operation])
     # Beschikbare data lagen
     print(list(wfs.contents))
     # Print alle metadata van alle lagen
