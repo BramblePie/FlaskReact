@@ -2,7 +2,6 @@ Verdeling van databases:
 
 Joey:
 
-- Perceel huizen.
 - Infrastructuur, wegen en spoor
 - Gebouwligging
 
@@ -10,14 +9,12 @@ Joey:
 
 Nawied:
 
-- Demografie
 - Recreatie
 - Veiligheid
 
 
 Seyfullah
 
-- Inwonersaantal
 - Werkgelegenheid sectoren per gemeente.
 
 Onderdelen van data understanding:
