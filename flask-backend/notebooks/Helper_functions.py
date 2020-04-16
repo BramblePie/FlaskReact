@@ -34,21 +34,21 @@ def query_kadaster(sparql_query, sparql_service_url):
 
 
 
-# # FUNCTIE VOOR HET OPVRAGEN VAN WFS INFO
-# # --------------------------------------
-# def wfs_info(wfs_url):
-#     url = wfs_url
-#     wfs = WebFeatureService(url=url)
-#     print(wfs.identification.title)
-#     # Wfs versie
-#     print(wfs.version)
-#     # Beschikbare methodes
-#     print([operation.name for operation in wfs.operation]
-#     # Beschikbare data lagen
-#     print(list(wfs.contents))
-#     # Print alle metadata van alle lagen
-#     for layer, meta in wfs.items():
-#         print(meta.__dict__)
+# FUNCTIE VOOR HET OPVRAGEN VAN WFS INFO
+# --------------------------------------
+def wfs_info(wfs_url):
+    url = wfs_url
+    wfs = WebFeatureService(url=url)
+    print(wfs.identification.title)
+    # Wfs versie
+    print(wfs.version)
+    # Beschikbare methodes
+    print([operation.name for operation in wfs.operation])
+    # Beschikbare data lagen
+    print(list(wfs.contents))
+    # Print alle metadata van alle lagen
+    for layer, meta in wfs.items():
+        print(meta.__dict__)
     
         
 # FUNCTIE VOOR HET OPVRAGEN VAN WFS DATA
