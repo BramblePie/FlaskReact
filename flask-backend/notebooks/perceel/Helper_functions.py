@@ -59,6 +59,6 @@ def wfs_data(wfs_url, type_param):
     # Laatste beschikbare versie pakken
     layer = list(wfs.contents)[-1]
     # Specificeren van de parameters van de data
-    params = dict(service='WFS', version="1.0.0", request='GetFeature', typeName=type_param, outputFormat='json')
+    params = dict(service='WFS', version="1.0.0", maxFeatures=10, request='GetFeature', typeName=type_param, outputFormat='json')
     q = Request('GET', url, params=params).prepare().url
     return gpd.read_file(q)
