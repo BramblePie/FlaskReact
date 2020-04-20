@@ -24,3 +24,4 @@ def query_kadaster(sparql_query, sparql_service_url):
 # sparql_service_url = "https://data.pdok.nl/sparql"
 
 # data = query_kadaster(sparql_query, sparql_service_url)
+# print(data)
