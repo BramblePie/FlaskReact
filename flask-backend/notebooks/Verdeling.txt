@@ -1,0 +1,23 @@
+Verdeling van databases:
+
+Joey:
+
+- Infrastructuur, wegen en spoor
+- Gebouwligging
+
+
+
+Nawied:
+
+- Recreatie
+- Veiligheid
+
+
+Seyfullah
+
+- Werkgelegenheid sectoren per gemeente.
+
+Onderdelen van data understanding:
+- Data understanding
+- Beschrijven van de data
+- Data exploratie
