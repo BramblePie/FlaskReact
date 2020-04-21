@@ -1,6 +1,7 @@
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import numpy as np
 from descartes import PolygonPatch
 from pandas.io.json import json_normalize
 from SPARQLWrapper import SPARQLWrapper, JSON
@@ -62,3 +63,6 @@ def wfs_data(wfs_url, type_param):
     params = dict(service='WFS', version="1.0.0", request='GetFeature', typeName=type_param, outputFormat='json')
     q = Request('GET', url, params=params).prepare().url
     return gpd.read_file(q)
+
+def test(df):
+    return df[df.omgevingsadressendichtheid == -9999999].count() 
