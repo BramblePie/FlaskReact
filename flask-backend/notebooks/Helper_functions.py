@@ -64,5 +64,18 @@ def wfs_data(wfs_url, type_param):
     q = Request('GET', url, params=params).prepare().url
     return gpd.read_file(q)
 
-def norm(df):
-    df['col']=(df['col']-df['col'].min())/(df['col'].max()-df['col'].min())
+# FUNCTIE VOOR HET MAKEN KLASSES OP BASIS VAN KWARTIEL, BEDOELD VOOR KLASSE BIJ NORMALISATIE WAARDES
+# --------------------------------------
+
+def klasse(dataframe_kolom, dataframe_naam_nieuwe_kolom):
+    # Klasse geven aan water_normalisatie
+    water_25 = dataframe_kolom.quantile(q=.25)
+    water_50 = dataframe_kolom.quantile(q=.5)
+    water_75 = dataframe_kolom.quantile(q=.75)
+
+    # Gebruik de aantallen die bij vg_data.describe() staan
+    m1 = dataframe_kolom < water_25
+    m2 = np.logical_and(dataframe_kolom >  water_25, dataframe_kolom < water_50)
+    m3 = np.logical_and(dataframe_kolom >  water_50, dataframe_kolom < water_75)
+    m4 = dataframe_kolom > water_75
+    return dataframe_naam_nieuwe_kolom = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
