@@ -64,5 +64,5 @@ def wfs_data(wfs_url, type_param):
     q = Request('GET', url, params=params).prepare().url
     return gpd.read_file(q)
 
-def test(df):
-    return df[df.omgevingsadressendichtheid == -9999999].count() 
+def norm(df):
+    df['col']=(df['col']-df['col'].min())/(df['col'].max()-df['col'].min())
