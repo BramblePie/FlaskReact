@@ -65,9 +65,10 @@ def wfs_data(wfs_url, type_param):
     return gpd.read_file(q)
 
 # FUNCTIE VOOR HET MAKEN KLASSES OP BASIS VAN KWARTIEL, BEDOELD VOOR KLASSE BIJ NORMALISATIE WAARDES
+# Niet af
 # --------------------------------------
 
-# def klasse(dataframe_kolom, dataframe_naam_nieuwe_kolom):
+# def test(dataframe_kolom, dataframe_naam_nieuwe_kolom):
 #     # Klasse geven aan water_normalisatie
 #     water_25 = dataframe_kolom.quantile(q=.25)
 #     water_50 = dataframe_kolom.quantile(q=.5)
