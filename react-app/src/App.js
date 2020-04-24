@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import './App.css'
 
 import Gemeente from './components/Gemeente';
+import Profile from './components/Profile';
 
 function App() {
 
 	const [gemeentes, setGemeentes] = useState([]);
-	const [inwCount, setInwCount] = useState(500000);
 
-	useEffect(() => {
+
+	const getGemeentes = (aant_inw) => {
 		// Haal gemeentes op uit Flask API
-		fetch(`http://127.0.0.1/api/gemeente/${inwCount}`)
+		fetch(`http://127.0.0.1/api/gemeente/${aant_inw}`)
 			.then((response) => {
 				return response.json();
 			}).then((data) => {
 				setGemeentes(Object.entries(data));
 			});
-
-	}, [inwCount])
+	};
 
 	return (
-		<div >
-			<input type="number" min="0" step="1000" value={inwCount} onChange={(e) => setInwCount(e.target.value)} />
+		<div class="app">
+			<Profile getGemeentes={getGemeentes} />
 			<div>
 				{gemeentes.map((gemeente) => (
 					<Gemeente info={gemeente} />
