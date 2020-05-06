@@ -33,8 +33,6 @@ function App() {
 
 	}, [inwCount])
 
-
-
 	const getStyle = () => (
 		{
 			color: num % 2 == 0 ? '#800080' : '#FFFFFF'
