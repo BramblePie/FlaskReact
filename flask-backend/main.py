@@ -1,11 +1,10 @@
+import math
+import random
 from flask import Flask, render_template, Blueprint, request
 from flask_restplus import Api, Resource
 
-# from notebooks.data_prep import get_gem_min_inw
-import notebooks.data_prep as notebook
+from veiligheid import veiligheidAPI
 
-print("modeling")
-print("prep")
 
 print("Starting flask server")
 app = Flask(__name__)
@@ -22,7 +21,6 @@ def home():
 
 
 # API Controllers
-import random, math
 
 
 @api.route("/number/<int:seed>")
@@ -38,3 +36,10 @@ class AantalInwoners(Resource):
     def get(self, inwoners):
         """Get all gemeentes met minimaal zoveel inwoners"""
         return notebook.get_gem_min_inw(inwoners)
+
+
+@api.route("/veiligheid/<string:text>")
+class VeiligheidFrame(Resource):
+    def get(self, text):
+        """Test functie veiligheid"""
+        return veiligheidAPI(text)
