@@ -42,8 +42,8 @@ class AantalInwoners(Resource):
         """Get all gemeentes met minimaal zoveel inwoners"""
         return notebook.get_gem_min_inw(inwoners)
 
-@api.route("/werkgelegenheid/<string:regio>")
-class WergelegenheidFrame(Resource):
-    def get(self, regio):
-        """Test functie veiligheid"""
-        return werkgelegenheidAPI(regio)
+@api.route("/werkgelegenheid/<string:branche_code><string:klasse>")
+class WerkgelegenheidFrame(Resource):
+    def get(self, branche_code, klasse):
+        """Functie Werkgelegenheid!. Done. Copyright Nawied & Joey"""
+        return werkgelegenheidAPI(branche_code, klasse)

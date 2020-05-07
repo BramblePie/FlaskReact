@@ -57,7 +57,19 @@ werkgelegenheid_groupby["Vestigingen Klasse"] = np.select([m1,m2,m3,m4], ['Laag'
 
 werkgelegenheid_groupby_index = werkgelegenheid_groupby.reset_index()
 
+splitten_bedrijfstak = werkgelegenheid_groupby_index["Bedrijfstakken/branches SBI 2008"].str.split(" ", n=1, expand=True)
 
-def werkgelegenheidAPI(regio):
-    resultaat = werkgelegenheid_groupby_index.loc[((werkgelegenheid_groupby_index["Regio's"] == regio))]
+samenvoegen_df = pd.merge(werkgelegenheid_groupby_index, splitten_bedrijfstak, left_index=True, right_index=True)
+
+samenvoegen_df.rename(columns={0:'Bedrijfstak_code', 1:'Bedrijfstak'}, inplace=True)
+
+werkgelegenheid_geprept = movecol(samenvoegen_df, cols_to_move=['Bedrijfstak_code', 'Bedrijfstak'], ref_col="Perioden", place='After')
+
+werkgelegenheid_df= werkgelegenheid_geprept.drop(columns='Bedrijfstakken/branches SBI 2008')
+
+werkgelegenheid_df
+
+
+def werkgelegenheidAPI(branche_code, klasse):
+    resultaat = werkgelegenheid_df.loc[((werkgelegenheid_df["Bedrijfstak_code"] == branche_code) & (werkgelegenheid_df["Vestigingen Klasse"] == klasse))]
     return resultaat.to_dict(orient="records")
