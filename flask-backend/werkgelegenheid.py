@@ -10,8 +10,8 @@ from prep import movecol
 pd.set_option('display.max_rows', 50)
 
 # Dataset inlezen
-file = "../raw-data/Vestegingen_Gemeente.csv"
-postcode_file = "../raw-data/provincie.xlsx"
+file = "raw-data/Vestegingen_Gemeente.csv"
+postcode_file = "raw-data/provincie.xlsx"
 data_pc = pd.read_excel(postcode_file)
 data_vg = pd.read_csv(file, sep=";")
 
@@ -62,7 +62,7 @@ for i in test:
 # - `Vestigingen (aantal)` heeft een opmerkelijke notatie die op basis van vorige functie anders word weergegeven dan in de tabelweergave. De waarden zijn echter correct en hetzelfde, maar met een andere notatie. Het valt op dat er in deze kolom een NaN waarde zit, dat dient aangepast te worden.
 
 # Controleren op de lege waardes
-data_vg_incl_provincie.isna().sum()
+# data_vg_incl_provincie.isna().sum()
 
 # Invullen van de Na/NaN waarden in kolom Vestigingen (aantal) door 0
 data_vg2 = data_vg["Vestigingen (aantal)"].fillna(0)
@@ -129,5 +129,11 @@ werkgelegenheid_groupby
 # 
 # Op basis van deze historische data kan ook een invulling gegeven worden aan het voorspellende aspect van de werkgelegenheid.
 
-def werkgelegenheidAPI():
+# def veiligheidAPI(text):
+#     # voor elke client/ bezoeker
+#     return data_voorspelling_groupby.reset_index().to_dict(orient="index")
+
+
+def werkgelegenheidAPI(branche, vestigingsklasse, periode):
+    
   pass
