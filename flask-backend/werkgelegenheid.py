@@ -55,9 +55,9 @@ m4 = vestigingen > werk_75
 
 werkgelegenheid_groupby["Vestigingen Klasse"] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
 
-werkgelegenheid_groupby
+werkgelegenheid_groupby.reindex()
 
 
-def werkgelegenheidAPI(branche, vestigingsklasse, periode):
-    
-  pass
+def werkgelegenheidAPI(regio):
+    resultaat = werkgelegenheid_groupby.loc[((werkgelegenheid_groupby["Regio's"] == regio))]
+    return resultaat
