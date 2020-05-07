@@ -5,12 +5,12 @@ from Helper_functions import *
 import numpy as np 
 from sklearn import preprocessing
 gpdf_wijken = wfs_data("https://geodata.nationaalgeoregister.nl/wijkenbuurten2019/wfs", "wijkenbuurten2019:cbs_wijken_2019")
-gpdf_gemeenten = wfs_data("https://geodata.nationaalgeoregister.nl/wijkenbuurten2019/wfs", "wijkenbuurten2019:gemeenten2019")
+#gpdf_gemeenten = wfs_data("https://geodata.nationaalgeoregister.nl/wijkenbuurten2019/wfs", "wijkenbuurten2019:gemeenten2019")
 
 
 # %%
 gpdf_wijken = gpdf_wijken.replace(-99999999, np.nan)
-gpdf_gemeenten = gpdf_gemeenten.replace(-99999999, np.nan)
+#gpdf_gemeenten = gpdf_gemeenten.replace(-99999999, np.nan)
 
 
 
@@ -29,162 +29,162 @@ gpdf_gemeenten = gpdf_gemeenten.replace(-99999999, np.nan)
 # %%
 gpdf_wijken_backup = gpdf_wijken
 
-stedelijkheid = True
-water = True
-mensen = True 
-kinderen = True 
-senioren = True
+# stedelijkheid = True
+# water = True
+# mensen = True 
+# kinderen = True 
+# senioren = True
 
-if stedelijkheid == True:
-    # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
-    x = gpdf_wijken[['omgevingsadressendichtheid']]
-    min_max_scaler = preprocessing.MinMaxScaler()
-    x_scaled = min_max_scaler.fit_transform(x)
-    gpdf_wijken['omgevingsadressendichtheid_genormaliseerd'] = pd.DataFrame(x_scaled)
+# if stedelijkheid == True:
+#     # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
+#     x = gpdf_wijken[['omgevingsadressendichtheid']]
+#     min_max_scaler = preprocessing.MinMaxScaler()
+#     x_scaled = min_max_scaler.fit_transform(x)
+#     gpdf_wijken['omgevingsadressendichtheid_genormaliseerd'] = pd.DataFrame(x_scaled)
 
-    # Normalisatie waarde aanmaken voor stedelijkheid_adressen_per_km2
-    x = gpdf_wijken[['stedelijkheid_adressen_per_km2']]
-    min_max_scaler = preprocessing.MinMaxScaler()
-    x_scaled = min_max_scaler.fit_transform(x)
-    gpdf_wijken['stedelijkheid_adressen_per_km2_genormaliseerd'] = pd.DataFrame(x_scaled)
+#     # Normalisatie waarde aanmaken voor stedelijkheid_adressen_per_km2
+#     x = gpdf_wijken[['stedelijkheid_adressen_per_km2']]
+#     min_max_scaler = preprocessing.MinMaxScaler()
+#     x_scaled = min_max_scaler.fit_transform(x)
+#     gpdf_wijken['stedelijkheid_adressen_per_km2_genormaliseerd'] = pd.DataFrame(x_scaled)
 
-    # Maken van vertaling naar één normalisatie waarde in een kolom 'stedelijkheid_normalisatie_waarde'
-    gpdf_wijken['stedelijkheid_normalisatie_waarde'] = gpdf_wijken['omgevingsadressendichtheid_genormaliseerd'] + gpdf_wijken['stedelijkheid_adressen_per_km2_genormaliseerd']
+#     # Maken van vertaling naar één normalisatie waarde in een kolom 'stedelijkheid_normalisatie_waarde'
+#     gpdf_wijken['stedelijkheid_normalisatie_waarde'] = gpdf_wijken['omgevingsadressendichtheid_genormaliseerd'] + gpdf_wijken['stedelijkheid_adressen_per_km2_genormaliseerd']
 
-    # Verwijderen van overbodige kolommen
-    gpdf_wijken.drop(columns=['omgevingsadressendichtheid_genormaliseerd','stedelijkheid_adressen_per_km2_genormaliseerd'], axis=1, inplace=True)
+#     # Verwijderen van overbodige kolommen
+#     gpdf_wijken.drop(columns=['omgevingsadressendichtheid_genormaliseerd','stedelijkheid_adressen_per_km2_genormaliseerd'], axis=1, inplace=True)
 
-    #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
-    dataframe_kolom = gpdf_wijken["stedelijkheid_normalisatie_waarde"]
-    q25 = dataframe_kolom.quantile(q=.25)
-    q50 = dataframe_kolom.quantile(q=.5)
-    q75 = dataframe_kolom.quantile(q=.75)
+#     #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
+#     dataframe_kolom = gpdf_wijken["stedelijkheid_normalisatie_waarde"]
+#     q25 = dataframe_kolom.quantile(q=.25)
+#     q50 = dataframe_kolom.quantile(q=.5)
+#     q75 = dataframe_kolom.quantile(q=.75)
 
-    # Gebruik de aantallen die bij vg_data.describe() staan
-    m1 = dataframe_kolom < q25
-    m2 = np.logical_and(dataframe_kolom >  q25, dataframe_kolom < q50)
-    m3 = np.logical_and(dataframe_kolom >  q50, dataframe_kolom < q75)
-    m4 = dataframe_kolom > q75
+#     # Gebruik de aantallen die bij vg_data.describe() staan
+#     m1 = dataframe_kolom < q25
+#     m2 = np.logical_and(dataframe_kolom >  q25, dataframe_kolom < q50)
+#     m3 = np.logical_and(dataframe_kolom >  q50, dataframe_kolom < q75)
+#     m4 = dataframe_kolom > q75
 
-    gpdf_wijken['klasse_stedelijkheid_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
+#     gpdf_wijken['klasse_stedelijkheid_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
 
-# -----------------------------------------------------------------------------------------------------
+# # -----------------------------------------------------------------------------------------------------
 
-if mensen == True:
-    # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
-    x = gpdf_wijken[['aantal_inwoners']]
-    min_max_scaler = preprocessing.MinMaxScaler()
-    x_scaled = min_max_scaler.fit_transform(x)
-    gpdf_wijken['aantal_inwoners_genormaliseerd'] = pd.DataFrame(x_scaled)
+# if mensen == True:
+#     # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
+#     x = gpdf_wijken[['aantal_inwoners']]
+#     min_max_scaler = preprocessing.MinMaxScaler()
+#     x_scaled = min_max_scaler.fit_transform(x)
+#     gpdf_wijken['aantal_inwoners_genormaliseerd'] = pd.DataFrame(x_scaled)
     
-    # Normalisatie waarde aanmaken voor stedelijkheid_adressen_per_km2
-    x = gpdf_wijken[['bevolkingsdichtheid_inwoners_per_km2']]
-    min_max_scaler = preprocessing.MinMaxScaler()
-    x_scaled = min_max_scaler.fit_transform(x)
-    gpdf_wijken['bevolkingsdichtheid_inwoners_per_km2_genormaliseerd'] = pd.DataFrame(x_scaled)
+#     # Normalisatie waarde aanmaken voor stedelijkheid_adressen_per_km2
+#     x = gpdf_wijken[['bevolkingsdichtheid_inwoners_per_km2']]
+#     min_max_scaler = preprocessing.MinMaxScaler()
+#     x_scaled = min_max_scaler.fit_transform(x)
+#     gpdf_wijken['bevolkingsdichtheid_inwoners_per_km2_genormaliseerd'] = pd.DataFrame(x_scaled)
 
-    # Maken van vertaling naar één normalisatie waarde in een kolom 'stedelijkheid_normalisatie_waarde'
-    gpdf_wijken['mensen_normalisatie_waarde'] = gpdf_wijken['aantal_inwoners_genormaliseerd'] + gpdf_wijken['bevolkingsdichtheid_inwoners_per_km2_genormaliseerd']
+#     # Maken van vertaling naar één normalisatie waarde in een kolom 'stedelijkheid_normalisatie_waarde'
+#     gpdf_wijken['mensen_normalisatie_waarde'] = gpdf_wijken['aantal_inwoners_genormaliseerd'] + gpdf_wijken['bevolkingsdichtheid_inwoners_per_km2_genormaliseerd']
 
-    # Verwijderen van overbodige kolommen
-    gpdf_wijken.drop(columns=['aantal_inwoners_genormaliseerd','bevolkingsdichtheid_inwoners_per_km2_genormaliseerd'], axis=1, inplace=True)
+#     # Verwijderen van overbodige kolommen
+#     gpdf_wijken.drop(columns=['aantal_inwoners_genormaliseerd','bevolkingsdichtheid_inwoners_per_km2_genormaliseerd'], axis=1, inplace=True)
 
-    #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
-    dataframe_kolom = gpdf_wijken["mensen_normalisatie_waarde"]
-    q25 = dataframe_kolom.quantile(q=.25)
-    q50 = dataframe_kolom.quantile(q=.5)
-    q75 = dataframe_kolom.quantile(q=.75)
+#     #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
+#     dataframe_kolom = gpdf_wijken["mensen_normalisatie_waarde"]
+#     q25 = dataframe_kolom.quantile(q=.25)
+#     q50 = dataframe_kolom.quantile(q=.5)
+#     q75 = dataframe_kolom.quantile(q=.75)
 
-    # Gebruik de aantallen die bij vg_data.describe() staan
-    m1 = dataframe_kolom < q25
-    m2 = np.logical_and(dataframe_kolom > q25, dataframe_kolom < q50)
-    m3 = np.logical_and(dataframe_kolom > q50, dataframe_kolom < q75)
-    m4 = dataframe_kolom > q75
+#     # Gebruik de aantallen die bij vg_data.describe() staan
+#     m1 = dataframe_kolom < q25
+#     m2 = np.logical_and(dataframe_kolom > q25, dataframe_kolom < q50)
+#     m3 = np.logical_and(dataframe_kolom > q50, dataframe_kolom < q75)
+#     m4 = dataframe_kolom > q75
 
-    gpdf_wijken['klasse_mensen_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
+#     gpdf_wijken['klasse_mensen_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
 
-# -----------------------------------------------------------------------------------------------------
+# # -----------------------------------------------------------------------------------------------------
 
-if kinderen == True:
-    # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
-    gpdf_wijken['kinderen_berekening'] = gpdf_wijken['percentage_personen_0_tot_15_jaar'] / 100
-    gpdf_wijken['aantal_kinderen_in_wijk'] = gpdf_wijken['aantal_inwoners'] * gpdf_wijken['kinderen_berekening']
-    gpdf_wijken['aantal_kinderen_in_wijk'] = gpdf_wijken['aantal_kinderen_in_wijk'].apply(np.floor)
+# if kinderen == True:
+#     # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
+#     gpdf_wijken['kinderen_berekening'] = gpdf_wijken['percentage_personen_0_tot_15_jaar'] / 100
+#     gpdf_wijken['aantal_kinderen_in_wijk'] = gpdf_wijken['aantal_inwoners'] * gpdf_wijken['kinderen_berekening']
+#     gpdf_wijken['aantal_kinderen_in_wijk'] = gpdf_wijken['aantal_kinderen_in_wijk'].apply(np.floor)
 
-    x = gpdf_wijken[['aantal_kinderen_in_wijk']]
-    min_max_scaler = preprocessing.MinMaxScaler()
-    x_scaled = min_max_scaler.fit_transform(x)
-    gpdf_wijken['kinderen_normalisatie_waarde'] = pd.DataFrame(x_scaled)
+#     x = gpdf_wijken[['aantal_kinderen_in_wijk']]
+#     min_max_scaler = preprocessing.MinMaxScaler()
+#     x_scaled = min_max_scaler.fit_transform(x)
+#     gpdf_wijken['kinderen_normalisatie_waarde'] = pd.DataFrame(x_scaled)
 
-    gpdf_wijken.drop(columns=['kinderen_berekening', 'aantal_kinderen_in_wijk'], axis=1, inplace=True)
+#     gpdf_wijken.drop(columns=['kinderen_berekening', 'aantal_kinderen_in_wijk'], axis=1, inplace=True)
 
-    #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
-    dataframe_kolom = gpdf_wijken["kinderen_normalisatie_waarde"]
-    q25 = dataframe_kolom.quantile(q=.25)
-    q50 = dataframe_kolom.quantile(q=.5)
-    q75 = dataframe_kolom.quantile(q=.75)
+#     #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
+#     dataframe_kolom = gpdf_wijken["kinderen_normalisatie_waarde"]
+#     q25 = dataframe_kolom.quantile(q=.25)
+#     q50 = dataframe_kolom.quantile(q=.5)
+#     q75 = dataframe_kolom.quantile(q=.75)
 
-    # Gebruik de aantallen die bij vg_data.describe() staan
-    m1 = dataframe_kolom < q25
-    m2 = np.logical_and(dataframe_kolom >  q25, dataframe_kolom < q50)
-    m3 = np.logical_and(dataframe_kolom >  q50, dataframe_kolom < q75)
-    m4 = dataframe_kolom > q75
+#     # Gebruik de aantallen die bij vg_data.describe() staan
+#     m1 = dataframe_kolom < q25
+#     m2 = np.logical_and(dataframe_kolom >  q25, dataframe_kolom < q50)
+#     m3 = np.logical_and(dataframe_kolom >  q50, dataframe_kolom < q75)
+#     m4 = dataframe_kolom > q75
 
-    gpdf_wijken['klasse_kinderen_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
+#     gpdf_wijken['klasse_kinderen_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
 
-# -----------------------------------------------------------------------------------------------------
+# # -----------------------------------------------------------------------------------------------------
 
-if senioren == True:
-    # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
-    gpdf_wijken['senioren_berekening'] = gpdf_wijken['percentage_personen_65_jaar_en_ouder'] / 100
-    gpdf_wijken['aantal_senioren_in_wijk'] = gpdf_wijken['aantal_inwoners'] * gpdf_wijken['senioren_berekening']
-    gpdf_wijken['aantal_senioren_in_wijk'] = gpdf_wijken['aantal_senioren_in_wijk'].apply(np.floor)
+# if senioren == True:
+#     # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
+#     gpdf_wijken['senioren_berekening'] = gpdf_wijken['percentage_personen_65_jaar_en_ouder'] / 100
+#     gpdf_wijken['aantal_senioren_in_wijk'] = gpdf_wijken['aantal_inwoners'] * gpdf_wijken['senioren_berekening']
+#     gpdf_wijken['aantal_senioren_in_wijk'] = gpdf_wijken['aantal_senioren_in_wijk'].apply(np.floor)
 
-    x = gpdf_wijken[['aantal_senioren_in_wijk']]
-    min_max_scaler = preprocessing.MinMaxScaler()
-    x_scaled = min_max_scaler.fit_transform(x)
-    gpdf_wijken['senioren_normalisatie_waarde'] = pd.DataFrame(x_scaled)
+#     x = gpdf_wijken[['aantal_senioren_in_wijk']]
+#     min_max_scaler = preprocessing.MinMaxScaler()
+#     x_scaled = min_max_scaler.fit_transform(x)
+#     gpdf_wijken['senioren_normalisatie_waarde'] = pd.DataFrame(x_scaled)
 
-    gpdf_wijken.drop(columns=['senioren_berekening', 'aantal_senioren_in_wijk'], axis=1, inplace=True)
+#     gpdf_wijken.drop(columns=['senioren_berekening', 'aantal_senioren_in_wijk'], axis=1, inplace=True)
 
-    #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
-    dataframe_kolom = gpdf_wijken["senioren_normalisatie_waarde"]
-    q25 = dataframe_kolom.quantile(q=.25)
-    q50 = dataframe_kolom.quantile(q=.5)
-    q75 = dataframe_kolom.quantile(q=.75)
+#     #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
+#     dataframe_kolom = gpdf_wijken["senioren_normalisatie_waarde"]
+#     q25 = dataframe_kolom.quantile(q=.25)
+#     q50 = dataframe_kolom.quantile(q=.5)
+#     q75 = dataframe_kolom.quantile(q=.75)
 
-    # Gebruik de aantallen die bij vg_data.describe() staan
-    m1 = dataframe_kolom < q25
-    m2 = np.logical_and(dataframe_kolom >  q25, dataframe_kolom < q50)
-    m3 = np.logical_and(dataframe_kolom >  q50, dataframe_kolom < q75)
-    m4 = dataframe_kolom > q75
+#     # Gebruik de aantallen die bij vg_data.describe() staan
+#     m1 = dataframe_kolom < q25
+#     m2 = np.logical_and(dataframe_kolom >  q25, dataframe_kolom < q50)
+#     m3 = np.logical_and(dataframe_kolom >  q50, dataframe_kolom < q75)
+#     m4 = dataframe_kolom > q75
 
-    gpdf_wijken['klasse_senioren_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
+#     gpdf_wijken['klasse_senioren_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
 
-# -----------------------------------------------------------------------------------------------------
+# # -----------------------------------------------------------------------------------------------------
 
-if water == True:
-    # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
-    x = gpdf_wijken[['oppervlakte_water_in_ha']]
-    min_max_scaler = preprocessing.MinMaxScaler()
-    x_scaled = min_max_scaler.fit_transform(x)
-    gpdf_wijken['water_normalisatie_waarde'] = pd.DataFrame(x_scaled)
+# if water == True:
+#     # Normalisatie waarde aanmaken voor 'omgevingsadressendichtheid'
+#     x = gpdf_wijken[['oppervlakte_water_in_ha']]
+#     min_max_scaler = preprocessing.MinMaxScaler()
+#     x_scaled = min_max_scaler.fit_transform(x)
+#     gpdf_wijken['water_normalisatie_waarde'] = pd.DataFrame(x_scaled)
 
-    #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
-    dataframe_kolom = gpdf_wijken["water_normalisatie_waarde"]
-    q25 = dataframe_kolom.quantile(q=.25)
-    q50 = dataframe_kolom.quantile(q=.5)
-    q75 = dataframe_kolom.quantile(q=.75)
+#     #KLASSE KOLOM MAKEN OP BASIS VAN KWARTIELEN VAN NORMALISATIE WAARDE
+#     dataframe_kolom = gpdf_wijken["water_normalisatie_waarde"]
+#     q25 = dataframe_kolom.quantile(q=.25)
+#     q50 = dataframe_kolom.quantile(q=.5)
+#     q75 = dataframe_kolom.quantile(q=.75)
 
-    # Gebruik de aantallen die bij vg_data.describe() staan
-    m1 = dataframe_kolom < q25
-    m2 = np.logical_and(dataframe_kolom >  q25, dataframe_kolom < q50)
-    m3 = np.logical_and(dataframe_kolom >  q50, dataframe_kolom < q75)
-    m4 = dataframe_kolom > q75
+#     # Gebruik de aantallen die bij vg_data.describe() staan
+#     m1 = dataframe_kolom < q25
+#     m2 = np.logical_and(dataframe_kolom >  q25, dataframe_kolom < q50)
+#     m3 = np.logical_and(dataframe_kolom >  q50, dataframe_kolom < q75)
+#     m4 = dataframe_kolom > q75
 
-    gpdf_wijken['klasse_water_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
+#     gpdf_wijken['klasse_water_normalisatie'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
 
-gpdf_wijken
+# gpdf_wijken
 
 Dataframe_demografie = gpdf_wijken
 
@@ -200,6 +200,6 @@ Dataframe_demografie = gpdf_wijken[['wijkcode', 'wijknaam','gemeentenaam','water
        'oppervlakte_water_in_ha']]
 
 def demografieAPI(wijk_code):
-    df = Dataframe_demografie.loc[Dataframe_demografie['wijkcode'] == wijk_code]
+    df = Dataframe_demografie.loc[Dataframe_demografie['wijknaam'] == wijk_code]
     return df.to_dict()
 
