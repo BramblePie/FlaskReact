@@ -186,7 +186,18 @@ if water == True:
 
 gpdf_wijken
 
+Dataframe_demografie = gpdf_wijken
 
+Dataframe_demografie = gpdf_wijken[['wijkcode', 'wijknaam','gemeentenaam','water','omgevingsadressendichtheid','stedelijkheid_adressen_per_km2', 'bevolkingsdichtheid_inwoners_per_km2', 'aantal_inwoners', 'mannen',
+       'vrouwen', 'percentage_personen_0_tot_15_jaar',
+       'percentage_personen_15_tot_25_jaar',
+       'percentage_personen_25_tot_45_jaar',
+       'percentage_personen_65_jaar_en_ouder',
+       'percentage_personen_45_tot_65_jaar', 'percentage_ongehuwd',
+       'percentage_gehuwd', 'percentage_gescheid','aantal_huishoudens', 'percentage_eenpersoonshuishoudens',
+       'percentage_huishoudens_zonder_kinderen',
+       'percentage_huishoudens_met_kinderen', 'gemiddelde_huishoudsgrootte','oppervlakte_totaal_in_ha', 'oppervlakte_land_in_ha',
+       'oppervlakte_water_in_ha']]
 
 def demografieAPI(wijk_code):
     df = Dataframe_demografie.loc[Dataframe_demografie['wijkcode'] == wijk_code]
