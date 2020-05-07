@@ -60,4 +60,4 @@ werkgelegenheid_groupby_index = werkgelegenheid_groupby.reset_index()
 
 def werkgelegenheidAPI(regio):
     resultaat = werkgelegenheid_groupby_index.loc[((werkgelegenheid_groupby_index["Regio's"] == regio))]
-    return resultaat
+    return resultaat.to_dict(orient="records")
