@@ -201,5 +201,5 @@ Dataframe_demografie = gpdf_wijken[['wijkcode', 'wijknaam','gemeentenaam','water
 
 def demografieAPI(wijk_code):
     df = Dataframe_demografie.loc[Dataframe_demografie['wijkcode'] == wijk_code]
-    return df.to_dict()
+    return df.to_dict(orient='list')
 
