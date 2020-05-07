@@ -3,7 +3,7 @@ from flask_restplus import Api, Resource
 
 # from notebooks.data_prep import get_gem_min_inw
 import notebooks.data_prep as notebook
-
+from wozwaarde import wozwaardeAPI
 print("modeling")
 print("prep")
 
@@ -38,3 +38,10 @@ class AantalInwoners(Resource):
     def get(self, inwoners):
         """Get all gemeentes met minimaal zoveel inwoners"""
         return notebook.get_gem_min_inw(inwoners)
+
+
+@api.route("/wozwaarde/<string:gemeente>")
+class Gemeentenaam(Resource):
+    def get(self, gemeente):
+        """Get all wozwaarde bij een bepaalde gemeente"""
+        return wozwaardeAPI(gemeente)
