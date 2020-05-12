@@ -70,7 +70,7 @@ werkgelegenheid_df= werkgelegenheid_geprept.drop(columns='Bedrijfstakken/branche
 werkgelegenheid_df
 
 
-def werkgelegenheidAPI(branche_code, klasse):
+def werkgelegenheidAPI(branche_code, klasse=None):
     resultaat = werkgelegenheid_df.loc[((werkgelegenheid_df["Bedrijfstak_code"] == branche_code) & (werkgelegenheid_df["Vestigingen Klasse"] == klasse))]
     return resultaat.to_dict(orient="records")
 

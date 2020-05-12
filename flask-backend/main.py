@@ -48,17 +48,17 @@ class AantalInwoners(Resource):
 #        """Functie Werkgelegenheid!. Done. Copyright Nawied & Joey"""
 #        return werkgelegenheidAPI(branche_code, klasse)
 
-@api.route('/werkgelegenheid/<string:uid>')
-@api.doc(params={'uid': {'description': 'user UID'},
-                 'param1': {'description': 'blabla', 'in': 'query', 'type': 'int'}})
+@api.route('/werkgelegenheid/<string:branche_code>')
+@api.doc(params={'branche_code': {'description': 'Code van de branche'},
+                 'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string'}})
 class WerkgelegenheidFrame(Resource):
-    @api.doc(params={'param2': {'description': 'another param just for that get route',
-                                'type': 'int', 'default': 1}})
-    def get(self, uid):
-        param2 = int(request.args.get('param2'))
-        param1 = int(request.args.get('param1'))
-        return werkgelegenheidAPI({'uid': uid, 'params': param1 + param2})
+    # @api.doc(params={'param2': {'description': 'another param just for that get route',
+    #                             'type': 'int', 'default': 1}})
+    def get(self, branche_code):
+        # param2 = int(request.args.get('param2'))
+        klasse = str(request.args.get('klasse'))
+        return werkgelegenheidAPI({'branche_code': branche_code, 'params': klasse})
 
-    def post(self, uid):
-        param1 = request.args.get('param1')
-        return werkgelegenheidAPI({'uid': uid, 'params': param1}
+    # def post(self, uid):
+    #     param1 = request.args.get('klasse')
+    #     return werkgelegenheidAPI({'uid': uid, 'params': param1}
