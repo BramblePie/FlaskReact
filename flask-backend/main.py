@@ -50,15 +50,8 @@ class AantalInwoners(Resource):
 
 @api.route('/werkgelegenheid/<string:branche_code>')
 @api.doc(params={'branche_code': {'description': 'Code van de branche'},
-                 'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string'}})
+                 'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string', 'required' : 'True'}})
 class WerkgelegenheidFrame(Resource):
-    # @api.doc(params={'param2': {'description': 'another param just for that get route',
-    #                             'type': 'int', 'default': 1}})
     def get(self, branche_code):
-        # param2 = int(request.args.get('param2'))
         klasse = str(request.args.get('klasse'))
-        return werkgelegenheidAPI({'branche_code': branche_code, 'params': klasse})
-
-    # def post(self, uid):
-    #     param1 = request.args.get('klasse')
-    #     return werkgelegenheidAPI({'uid': uid, 'params': param1}
+        return werkgelegenheidAPI(branche_code, klasse)              
