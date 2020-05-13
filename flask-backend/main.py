@@ -3,7 +3,12 @@ import random
 from flask import Flask, render_template, Blueprint, request
 from flask_restplus import Api, Resource
 
+# from notebooks.data_prep import get_gem_min_inw
+import notebooks.data_prep as notebook
+# import prep as notebookn
+
 from veiligheid import veiligheidAPI
+
 
 
 print("Starting flask server")

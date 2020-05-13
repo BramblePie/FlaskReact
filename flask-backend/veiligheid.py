@@ -112,4 +112,4 @@ print("Functions ready")
 
 def veiligheidAPI(text):
     # voor elke client/ bezoeker
-    return data_voorspelling_groupby.reset_index().to_dict(orient="index")
+    return data_voorspelling_groupby.to_dict(orient="index")
