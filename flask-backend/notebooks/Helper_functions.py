@@ -1,4 +1,5 @@
 import pandas as pd
+import seaborn as sb
 from sklearn import preprocessing
 import geopandas as gpd
 import matplotlib.pyplot as plt

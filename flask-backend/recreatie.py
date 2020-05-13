@@ -22,7 +22,7 @@ df_recreatie = df_recreatie[['aantal_woningen','aantal_woningen_bouwjaar_voor_19
 
 
 # %%
-zipfile = "zip://Postcode4.zip"
+zipfile = "zip://flask-backend/Postcode4.zip"
 df = gpd.read_file(zipfile)
 
 
@@ -109,7 +109,7 @@ for x in lijst:
 df_recreatie_formulier = df_recreatie_formulier.rename(columns={"PC4": "postcode"})
 df_recreatie = df_recreatie.rename(columns={"PC4": "postcode"})
 # %%
-df_toevoeging = pd.read_csv('dataset.csv')
+df_toevoeging = pd.read_csv('flask-backend/dataset.csv')
 df_toevoeging = df_toevoeging[['postcode','gemeente']]
 
 # %%
@@ -118,7 +118,7 @@ df_recreatie_formulier = pd.merge(df_recreatie_formulier, df_toevoeging, on='pos
 df_recreatie = movecol(df_recreatie, cols_to_move=['gemeente'], ref_col='postcode', place='After')
 df_recreatie_formulier = movecol(df_recreatie_formulier, cols_to_move=['gemeente'], ref_col='postcode', place='After')
 df_recreatie.drop(columns=['aantal_woningen_bouwjaar_voor_1945_genormaliseerd'])
-df_recreatie.drop(columns='geometry')
+df_recreatie.drop(columns=['geometry'])
 # %%
 def RecreatieAPI_Postcode(postcode):
     df = df_recreatie.loc[df_recreatie['postcode'] == postcode]
