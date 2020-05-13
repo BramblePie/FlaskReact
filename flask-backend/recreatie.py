@@ -22,7 +22,9 @@ df_recreatie = df_recreatie[['aantal_woningen','aantal_woningen_bouwjaar_voor_19
 
 
 # %%
-df = gpd.read_file('zip://Postcode4.zip')
+zipfile = "zip://Postcode4.zip"
+df = gpd.read_file(zipfile)
+
 
 
 # %%
