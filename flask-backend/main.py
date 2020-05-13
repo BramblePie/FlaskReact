@@ -38,3 +38,15 @@ class AantalInwoners(Resource):
     def get(self, inwoners):
         """Get all gemeentes met minimaal zoveel inwoners"""
         return notebook.get_gem_min_inw(inwoners)
+
+@api.route("/recreatie_postcode/<int:postcode>")
+class RecreatieFrame(Resource):
+    def get(self, text):
+        """Test functie recreatie"""
+        return RecreatieAPI_Postcode(text)
+
+@api.route("/recreatie_gemeente/<string:text>")
+class RecreatieFrame(Resource):
+    def get(self, text):
+        """Test functie recreatie"""
+        return RecreatieAPI_Gemeente(text)
