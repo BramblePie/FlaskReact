@@ -4,6 +4,8 @@ from flask_restplus import Api, Resource
 # from notebooks.data_prep import get_gem_min_inw
 import notebooks.data_prep as notebook
 
+from recreatie import RecreatieAPI_Gemeente, RecreatieAPI_Postcode
+
 print("modeling")
 print("prep")
 
@@ -40,13 +42,13 @@ class AantalInwoners(Resource):
         return notebook.get_gem_min_inw(inwoners)
 
 @api.route("/recreatie_postcode/<int:postcode>")
-class RecreatieFrame(Resource):
-    def get(self, text):
+class Recreatie_postcodeFrame(Resource):
+    def get(self, postcode):
         """Test functie recreatie"""
-        return RecreatieAPI_Postcode(text)
+        return RecreatieAPI_Postcode(postcode)
 
 @api.route("/recreatie_gemeente/<string:text>")
-class RecreatieFrame(Resource):
+class Recreatie_gemeenteFrame(Resource):
     def get(self, text):
         """Test functie recreatie"""
         return RecreatieAPI_Gemeente(text)
