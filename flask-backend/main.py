@@ -43,8 +43,8 @@ class AantalInwoners(Resource):
         return notebook.get_gem_min_inw(inwoners)
 
 
-@api.route("/veiligheid/<string:text>")
+@api.route("/veiligheid/<string:plaats>")
 class VeiligheidFrame(Resource):
-    def get(self, text):
+    def get(self, plaats):
         """Test functie veiligheid"""
-        return veiligheidAPI(text)
+        return veiligheidAPI(plaats)

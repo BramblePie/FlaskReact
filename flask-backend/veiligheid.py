@@ -83,6 +83,7 @@ misdrijven_df.drop(columns=["Misdrijven_relatief(%)"])
 print("Functions ready")
 
 
-def veiligheidAPI(text):
+def veiligheidAPI(plaats):
     # voor elke client/ bezoeker
-    return misdrijven_df.to_dict(orient="index")
+    resultaat = misdrijven_df.loc[(misdrijven_df["Regio's"] == plaats)]
+    return resultaat.to_dict(orient="index")
