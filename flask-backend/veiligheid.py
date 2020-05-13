@@ -8,7 +8,7 @@ from sklearn import preprocessing
 from prep import movecol
 
 # Dataset inlezen
-file = "raw-data/Veiligheid.csv"
+file = "raw-data/Veiligheid2.csv"
 data_veiligheid = pd.read_csv(file, sep=";")
 
 # ## Data exploratie
@@ -72,7 +72,8 @@ misdrijven_df = movecol(misdrijven_df, cols_to_move=['Soort_misdrijf'], ref_col=
 
 #PER PERIODE/JAAR EEN OVERZICHT VAN ALLE SOORTEN MISDRIJVEN EN WAT HET RELATIEF IS VAN HET TOTAAL. REGIO IS GEKOZEN DOOR INPUT
 # pd.set_option('display.max_rows', 50)
-misdrijven_df.drop(columns=["Misdrijven_relatief(%)"])
+
+misdrijven_df = misdrijven_df.drop(columns=["Misdrijven_relatief(%)"])
 
 # gemeente = input('Voer hier een gemeente in')
 
@@ -86,4 +87,4 @@ print("Functions ready")
 def veiligheidAPI(plaats):
     # voor elke client/ bezoeker
     resultaat = misdrijven_df.loc[(misdrijven_df["Regio's"] == plaats)]
-    return resultaat.to_dict(orient="index")
+    return resultaat.to_dict(orient="records")
