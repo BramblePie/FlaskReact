@@ -46,5 +46,5 @@ class AantalInwoners(Resource):
 @api.route("/veiligheid/<string:plaats>")
 class VeiligheidFrame(Resource):
     def get(self, plaats):
-        """Test functie veiligheid"""
+        """Functie misdaadcijfers plaats"""
         return veiligheidAPI(plaats)
