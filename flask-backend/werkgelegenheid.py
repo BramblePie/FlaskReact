@@ -11,7 +11,7 @@ pd.set_option('display.max_rows', 50)
 
 # Dataset inlezen
 file = "raw-data/Vestegingen_Gemeente.csv"
-postcode_file = "raw-data/provincie.xlsx"
+postcode_file = "raw-data/gemeenten-provincie.xlsx"
 data_pc = pd.read_excel(postcode_file)
 data_vg = pd.read_csv(file, sep=";")
 
