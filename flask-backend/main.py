@@ -3,6 +3,7 @@ from flask_restplus import Api, Resource
 
 # from notebooks.data_prep import get_gem_min_inw
 import notebooks.data_prep as notebook
+from demografie import demografieAPI
 
 print("modeling")
 print("prep")
@@ -45,3 +46,10 @@ class AantalInwoners(Resource):
     def get(self, inwoners):
         """Get all gemeentes met minimaal zoveel inwoners"""
         return notebook.get_gem_min_inw(inwoners)
+
+
+@api.route("/demografie/<string:text>")
+class DemografieFrame(Resource):
+    def get(self, text):
+        """Test functie demografie"""
+        return demografieAPI(text)
