@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Blueprint, request
+from flask import Flask, render_template, Blueprint, request, url_for
 from flask_restplus import Api, Resource
 
 # from notebooks.data_prep import get_gem_min_inw
@@ -18,8 +18,15 @@ app.register_blueprint(blueprint)
 @app.route("/")
 def home():
     # Alles wordt gecompiled in één pagina: index.html
-    return render_template("index.html")
+    return render_template("Dashboard.html")
 
+@app.route('/formulier')
+def Formulier():
+    return render_template ('Formulier.html', title='Formulier')
+
+@app.route('/statistieken')
+def Statistieken():
+    return render_template ('Statistieken.html', title='Statistieken')
 
 # API Controllers
 import random, math
