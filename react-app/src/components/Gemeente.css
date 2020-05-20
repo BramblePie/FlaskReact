@@ -1,0 +1,15 @@
+.gemeente {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    background-color: white;
+    flex-grow: 1;
+    margin: 10% 4px;
+}
+
+.gemeente img {
+    width: fit-content;
+    height: fit-content;
+
+    margin: -8% 0px;
+}
