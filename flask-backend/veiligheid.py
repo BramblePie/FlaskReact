@@ -9,7 +9,7 @@ from sklearn import preprocessing
 from prep import movecol
 
 # Dataset inlezen
-file = "raw-data/Veiligheid2.csv"
+file = "raw-data/Veiligheid.csv"
 data_veiligheid = pd.read_csv(file, sep=";")
 
 # ## Data exploratie
@@ -66,6 +66,6 @@ print("Functions ready")
 def veiligheidAPI(plaats):
     # voor elke client/ bezoeker
     resultaat = misdrijven_df.loc[(misdrijven_df["Regio's"] == plaats)]
-    return resultaat.to_dict(orient="records")
+    return resultaat.to_dict(orient='split')
 
 #Klaar
