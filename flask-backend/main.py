@@ -32,14 +32,23 @@ def Formulier():
 def Statistieken():
     return render_template ('Statistieken.html', title='Statistieken')
 
+@app.route('/veiligheid')
+def Veiligheid():
+    return render_template ('Veiligheid.html', title='Misdaad')
+
 @app.route('/statistieken', methods=['POST'])
-def my_form_post():
+def demografie_form_post():
     text = request.form['text']
     df = demografieAPI(text)
     json = table_converter(df)
-    return render_template ('Statistieken.html', title='Statistieken', df=df, json=json)
+    return render_template ('Statistieken.html', title='Statistieken', json=json)
 
-    
+@app.route('/veiligheid', methods=['POST'])
+def veiligheid_form_post():
+    text = request.form['text']
+    dfv = veiligheidAPI(text)
+    jsonv = table_converter(dfv)
+    return render_template ('Veiligheid.html', title='Misdaad', jsonv=jsonv)   
 
 
 # API Controllers

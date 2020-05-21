@@ -1,15 +1,9 @@
 # Benodigde Libraries importeren
-import pandas as pd
-import geopandas as gpd
-import seaborn as sb
-import numpy as np
-import matplotlib.pyplot as plt
 
-from sklearn import preprocessing
-from prep import movecol
+from Helper_functions import *
 
 # Dataset inlezen
-file = "raw-data/Veiligheid2.csv"
+file = "flask-backend/raw-data/Veiligheid.csv"
 data_veiligheid = pd.read_csv(file, sep=";")
 
 # ## Data exploratie
@@ -24,7 +18,7 @@ data_veiligheid_nieuw.rename(columns={'Soort misdrijf':'Soort_misdrijf','Geregis
 data_veiligheid_nieuw = data_veiligheid_nieuw.drop(columns=["Aantal_misdrijven(per_1000_inw)"])
 
 # Nieuwe dataset inladen voor mergen dataset, zodat regio's ook provincie er achter heeft staan
-file = "raw-data/gemeenten-provincie.xlsx"
+file = "flask-backend/raw-data/gemeenten-provincie.xlsx"
 postcode = pd.read_excel(file) 
 
 # Dataframe maken van de dataset

@@ -2,8 +2,7 @@
 # To add a new markdown cell, type '# %% [markdown]'
 # %%
 from Helper_functions import *
-import numpy as np 
-from sklearn import preprocessing
+
 gpdf_wijken = wfs_data("https://geodata.nationaalgeoregister.nl/wijkenbuurten2019/wfs", "wijkenbuurten2019:cbs_wijken_2019")
 #gpdf_gemeenten = wfs_data("https://geodata.nationaalgeoregister.nl/wijkenbuurten2019/wfs", "wijkenbuurten2019:gemeenten2019")
 
