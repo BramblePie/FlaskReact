@@ -160,3 +160,4 @@ raw-data/*.zip
 
 # vs code settings
 .vscode/settings.json
+flask-backend/wozwaarde.py

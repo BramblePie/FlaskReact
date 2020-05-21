@@ -3,8 +3,11 @@ import pandas as pd
 import geopandas as gpd
 import numpy as np
 from sklearn import preprocessing
+<<<<<<< Updated upstream
 pd.options.display.max_columns = None
 pd.options.display.max_rows = None
+=======
+>>>>>>> Stashed changes
 data = pd.read_csv('data/link/dataset.csv')
 data = data[['gemeente','postcode','gemiddelde_woz_waarde_woning','geometry']]
 gemiddeldewoz = data[['gemeente','gemiddelde_woz_waarde_woning']].groupby('gemeente').mean()
