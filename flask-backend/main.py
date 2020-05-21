@@ -3,8 +3,9 @@ from flask_restplus import Api, Resource
 
 # from notebooks.data_prep import get_gem_min_inw
 import notebooks.data_prep as notebook
+# import prep as notebookn
 
-from recreatie import RecreatieAPI_Gemeente, RecreatieAPI_Postcode
+from recreatie import recreatieAPI
 
 print("modeling")
 print("prep")
@@ -41,14 +42,17 @@ class AantalInwoners(Resource):
         """Get all gemeentes met minimaal zoveel inwoners"""
         return notebook.get_gem_min_inw(inwoners)
 
-@api.route("/recreatie_postcode/<int:postcode>")
-class Recreatie_postcodeFrame(Resource):
-    def get(self, postcode):
-        """Test functie recreatie"""
-        return RecreatieAPI_Postcode(postcode)
+#@api.route("/werkgelegenheid/<string:branche_code><string:klasse>")
+#class WerkgelegenheidFrame(Resource):
+#    def get(self, branche_code, klasse):
+#        """Functie Werkgelegenheid!. Done. Copyright Nawied & Joey"""
+#        return werkgelegenheidAPI(branche_code, klasse)
 
-@api.route("/recreatie_gemeente/<string:text>")
-class Recreatie_gemeenteFrame(Resource):
-    def get(self, text):
-        """Test functie recreatie"""
-        return RecreatieAPI_Gemeente(text)
+
+@api.route('/recreatie/<string:recreatie>')
+@api.doc(params={'recreatie': {'description': 'Recreatietype, bijvoorbeeld: hotel'},
+                 'klasse': {'description': 'Klasse van het recreatietype', 'in': 'query', 'type': 'string', 'required' : 'True'}})
+class RecreatieFrame(Resource):
+    def get(self, recreatie):
+        klasse = str(request.args.get('klasse'))
+        return recreatieAPI(recreatie, klasse)  

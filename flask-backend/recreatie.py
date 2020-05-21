@@ -1,131 +1,82 @@
-# To add a new cell, type '# %%'
-# To add a new markdown cell, type '# %% [markdown]'
-# %%
 from Helper_functions import *
 
-
-# %%
-test1 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",0)
-test2 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",1000)
-test3 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",2000)
-test4 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",3000)
-test5 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",4000)
+#test1 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",0)
+#test2 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",1000)
+#test3 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",2000)
+#test4 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",3000)
+#test5 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",4000)
 
 
-# %%
-df_recreatie = pd.concat([test1, test2, test3, test4, test5], ignore_index=True)
+#df_recreatie = pd.concat([test1, test2, test3, test4, test5], ignore_index=True)
 
+df_recreatie = pd.read_csv('raw-data/recreatie_nieuw.csv', index_col=0)
 
-# %%
-df_recreatie = df_recreatie[['aantal_woningen','aantal_woningen_bouwjaar_voor_1945','aantal_woningen_bouwjaar_45_tot_65','aantal_woningen_bouwjaar_65_tot_75','aantal_woningen_bouwjaar_75_tot_85','aantal_woningen_bouwjaar_85_tot_95','aantal_woningen_bouwjaar_95_tot_05','aantal_woningen_bouwjaar_05_tot_15','aantal_woningen_bouwjaar_15_en_later','gemiddelde_woz_waarde_woning','percentage_koopwoningen', 'percentage_huurwoningen','kinderdagverblijf_gemiddelde_afstand_in_km','kinderdagverblijf_aantal_binnen_1_km','kinderdagverblijf_aantal_binnen_3_km','kinderdagverblijf_aantal_binnen_5_km','buitenschoolse_opvang_gem_afstand_in_km','buitenschoolse_opvang_aantal_binnen_1_km','buitenschoolse_opvang_aantal_binnen_3_km','buitenschoolse_opvang_aantal_binnen_5_km','grote_supermarkt_gemiddelde_afstand_in_km','grote_supermarkt_aantal_binnen_1_km','grote_supermarkt_aantal_binnen_3_km','grote_supermarkt_aantal_binnen_5_km','winkels_ov_dagelijkse_levensm_gem_afst_in_km','winkels_ov_dagel_levensm_aantal_binnen_1_km','winkels_ov_dagel_levensm_aantal_binnen_3_km','winkels_ov_dagel_levensm_aantal_binnen_5_km','warenhuis_gemiddelde_afstand_in_km', 'warenhuis_aantal_binnen_5_km',
-'warenhuis_aantal_binnen_10_km', 'warenhuis_aantal_binnen_20_km','cafe_gemiddelde_afstand_in_km', 'cafe_aantal_binnen_1_km','cafe_aantal_binnen_3_km', 'cafe_aantal_binnen_5_km','cafetaria_gemiddelde_afstand_in_km', 'cafetaria_aantal_binnen_1_km','cafetaria_aantal_binnen_3_km', 'cafetaria_aantal_binnen_5_km','restaurant_gemiddelde_afstand_in_km','restaurant_aantal_binnen_1_km','restaurant_aantal_binnen_3_km', 'restaurant_aantal_binnen_5_km','hotel_gemiddelde_afstand_in_km', 'hotel_aantal_binnen_5_km','hotel_aantal_binnen_10_km', 'hotel_aantal_binnen_20_km','treinstation_gemiddelde_afstand_in_km','overstapstation_gemiddelde_afstand_in_km','brandweerkazerne_gemiddelde_afstand_in_km','geometry']]
+# Info over de kolommen in perceelprijzen
+info_kolommen_recreatie = df_recreatie.info()
 
+# Beschrijvende statistieken van de data
+beschrijvende_stats_recreatie = df_recreatie.describe(exclude='geometry')
 
-# %%
+# Informatie over de kolomnamen in de Dataframe
+df_recreatie.columns
+
+# Controleren op nulwaarden in de dataframe
+df_recreatie.isna().sum()
+
+#Dataframe maken van alleen recreatie onderdelen binnen 5km
+df_recreatie = df_recreatie[['winkels_ov_dagel_levensm_aantal_binnen_5_km', 'warenhuis_aantal_binnen_5_km', 'cafe_aantal_binnen_5_km', 'cafetaria_aantal_binnen_5_km', 'restaurant_aantal_binnen_5_km', 'hotel_aantal_binnen_5_km']]
+
+#postcode zip inladen
 zipfile = "zip://raw-data/Postcode4.zip"
 df = gpd.read_file(zipfile)
 
-
-
-# %%
+#Postcodezip en df samenvoegen en hernoemen
 df_recreatie = pd.concat([df_recreatie, df['PC4']], axis=1)
-df_recreatie = df_recreatie[['PC4','aantal_woningen', 'aantal_woningen_bouwjaar_voor_1945',
-       'aantal_woningen_bouwjaar_45_tot_65',
-       'aantal_woningen_bouwjaar_65_tot_75',
-       'aantal_woningen_bouwjaar_75_tot_85',
-       'aantal_woningen_bouwjaar_85_tot_95',
-       'aantal_woningen_bouwjaar_95_tot_05',
-       'aantal_woningen_bouwjaar_05_tot_15',
-       'aantal_woningen_bouwjaar_15_en_later', 'gemiddelde_woz_waarde_woning',
-       'percentage_koopwoningen', 'percentage_huurwoningen',
-       'kinderdagverblijf_gemiddelde_afstand_in_km',
-       'kinderdagverblijf_aantal_binnen_1_km',
-       'kinderdagverblijf_aantal_binnen_5_km',
-       'buitenschoolse_opvang_gem_afstand_in_km',
-       'buitenschoolse_opvang_aantal_binnen_1_km',
-       'buitenschoolse_opvang_aantal_binnen_5_km',
-       'grote_supermarkt_gemiddelde_afstand_in_km',
-       'grote_supermarkt_aantal_binnen_1_km',
-       'grote_supermarkt_aantal_binnen_5_km',
-       'winkels_ov_dagelijkse_levensm_gem_afst_in_km',
-       'winkels_ov_dagel_levensm_aantal_binnen_1_km',
-       'winkels_ov_dagel_levensm_aantal_binnen_5_km',
-       'warenhuis_gemiddelde_afstand_in_km', 'warenhuis_aantal_binnen_5_km',
-       'warenhuis_aantal_binnen_10_km', 'warenhuis_aantal_binnen_20_km',
-       'cafe_gemiddelde_afstand_in_km', 'cafe_aantal_binnen_1_km', 'cafe_aantal_binnen_5_km',
-       'cafetaria_gemiddelde_afstand_in_km', 'cafetaria_aantal_binnen_1_km', 'cafetaria_aantal_binnen_5_km',
-       'restaurant_gemiddelde_afstand_in_km', 'restaurant_aantal_binnen_1_km', 'restaurant_aantal_binnen_5_km',
-       'hotel_gemiddelde_afstand_in_km', 'hotel_aantal_binnen_5_km',
-       'hotel_aantal_binnen_10_km', 'hotel_aantal_binnen_20_km',
-       'treinstation_gemiddelde_afstand_in_km',
-       'overstapstation_gemiddelde_afstand_in_km',
-       'brandweerkazerne_gemiddelde_afstand_in_km', 'geometry']]
+df_recreatie = df_recreatie.rename(columns={"PC4": "postcode"})
+df_recreatie = movecol(df_recreatie, cols_to_move=['postcode'], ref_col='winkels_ov_dagel_levensm_aantal_binnen_5_km', place='After')
+df_recreatie = movecol(df_recreatie, cols_to_move=['winkels_ov_dagel_levensm_aantal_binnen_5_km'], ref_col='postcode', place='After')
 
+df = pd.read_csv('raw-data/postcode_gemeente.csv', index_col=0)
+df = df.rename(columns={"Gemeentenaam2019":"gemeente"})
+df_recreatie = df_recreatie.merge(df, on='postcode')
+df_recreatie = movecol(df_recreatie, cols_to_move=['gemeente'], ref_col='postcode', place='After')
 
-# %%
-df_recreatie = df_recreatie.replace('-99997', np.nan)
+#nulwaardes als string omzetten naar 0
+df_recreatie = df_recreatie.replace('-99997', 0)
 
-# %%
-df_recreatie_formulier = df_recreatie
-lijst = df_recreatie_formulier[['aantal_woningen_bouwjaar_voor_1945',
-       'aantal_woningen_bouwjaar_45_tot_65',
-       'aantal_woningen_bouwjaar_65_tot_75',
-       'aantal_woningen_bouwjaar_75_tot_85',
-       'aantal_woningen_bouwjaar_85_tot_95',
-       'aantal_woningen_bouwjaar_95_tot_05',
-       'aantal_woningen_bouwjaar_05_tot_15',
-       'aantal_woningen_bouwjaar_15_en_later','gemiddelde_woz_waarde_woning',
-       'percentage_koopwoningen', 'percentage_huurwoningen',
-       'kinderdagverblijf_gemiddelde_afstand_in_km',
-       'kinderdagverblijf_aantal_binnen_1_km',
-       'kinderdagverblijf_aantal_binnen_5_km',
-       'buitenschoolse_opvang_gem_afstand_in_km',
-       'buitenschoolse_opvang_aantal_binnen_1_km',
-       'buitenschoolse_opvang_aantal_binnen_5_km',
-       'grote_supermarkt_gemiddelde_afstand_in_km',
-       'grote_supermarkt_aantal_binnen_1_km',
-       'grote_supermarkt_aantal_binnen_5_km',
-       'winkels_ov_dagelijkse_levensm_gem_afst_in_km',
-       'winkels_ov_dagel_levensm_aantal_binnen_1_km',
-       'winkels_ov_dagel_levensm_aantal_binnen_5_km',
-       'warenhuis_gemiddelde_afstand_in_km', 'warenhuis_aantal_binnen_5_km',
-       'warenhuis_aantal_binnen_10_km', 'warenhuis_aantal_binnen_20_km',
-       'cafe_gemiddelde_afstand_in_km', 'cafe_aantal_binnen_1_km', 'cafe_aantal_binnen_5_km',
-       'cafetaria_gemiddelde_afstand_in_km', 'cafetaria_aantal_binnen_1_km', 'cafetaria_aantal_binnen_5_km',
-       'restaurant_gemiddelde_afstand_in_km', 'restaurant_aantal_binnen_1_km', 'restaurant_aantal_binnen_5_km',
-       'hotel_gemiddelde_afstand_in_km', 'hotel_aantal_binnen_5_km',
-       'hotel_aantal_binnen_10_km', 'hotel_aantal_binnen_20_km',
-       'treinstation_gemiddelde_afstand_in_km',
-       'overstapstation_gemiddelde_afstand_in_km',
-       'brandweerkazerne_gemiddelde_afstand_in_km']]
+#normaliseren
+lijst = df_recreatie[['winkels_ov_dagel_levensm_aantal_binnen_5_km',
+       'warenhuis_aantal_binnen_5_km', 'cafe_aantal_binnen_5_km',
+       'cafetaria_aantal_binnen_5_km', 'restaurant_aantal_binnen_5_km',
+       'hotel_aantal_binnen_5_km']]
 
 for x in lijst:
-    kolom = df_recreatie_formulier[[x]]
+    kolom = df_recreatie[[x]]
+    
     min_max_scaler = preprocessing.MinMaxScaler()
     x_scaled = min_max_scaler.fit_transform(kolom)
-    df_recreatie_formulier[x + "_genormaliseerd"] = pd.DataFrame(x_scaled)
-    df_recreatie_formulier = movecol(df_recreatie_formulier, cols_to_move=[x + "_genormaliseerd"], ref_col=x, place='After')
-# %%
-df_recreatie_formulier = df_recreatie_formulier.rename(columns={"PC4": "postcode"})
-df_recreatie = df_recreatie.rename(columns={"PC4": "postcode"})
-# %%
-df_toevoeging = pd.read_csv('raw-data/dataset.csv')
-df_toevoeging = df_toevoeging[['postcode','gemeente']]
+    df_recreatie[x + "_genormaliseerd"] = pd.DataFrame(x_scaled)
+    df_recreatie = movecol(df_recreatie, cols_to_move=[x + "_genormaliseerd"], ref_col=x, place='After')
 
-# %%
-df_recreatie = pd.merge(df_recreatie, df_toevoeging, on='postcode', how='left')
-df_recreatie_formulier = pd.merge(df_recreatie_formulier, df_toevoeging, on='postcode', how='left')
-df_recreatie = movecol(df_recreatie, cols_to_move=['gemeente'], ref_col='postcode', place='After')
-df_recreatie_formulier = movecol(df_recreatie_formulier, cols_to_move=['gemeente'], ref_col='postcode', place='After')
-df_recreatie.drop(columns=['aantal_woningen_bouwjaar_voor_1945_genormaliseerd'])
-df_recreatie.drop(columns=['geometry'])
-# %%
-def RecreatieAPI_Postcode(postcode):
-    df = df_recreatie.loc[df_recreatie['postcode'] == postcode]
-    return df.to_dict()
+#klasses aanmaken op basis van quantiles
+for x in lijst:
+    kolom = df_recreatie[x + "_genormaliseerd"]
 
-def RecreatieAPI_Gemeente(gemeente):
-    df = df_recreatie.loc[df_recreatie['gemeente'] == gemeente]
-    return df.to_dict()
+    q_25 = kolom.quantile(q=.25)
+    q_50 = kolom.quantile(q=.5)
+    q_75 = kolom.quantile(q=.75)
     
+    m1 = np.logical_and(kolom <= q_25, kolom != 0)
+    m2 = np.logical_and(kolom >= q_25, kolom < q_50)
+    m3 = np.logical_and(kolom >= q_50, kolom < q_75)
+    m4 = kolom > q_75
+    
+    df_recreatie[x + "_klasse"] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='Geen')
+    df_recreatie = movecol(df_recreatie, cols_to_move=[x + "_klasse"], ref_col=x + '_genormaliseerd', place='After')
 
+
+corr = df_recreatie.corr()
+
+def recreatieAPI(recreatie, klasse):
+    resultaat = df_recreatie.loc[((df_recreatie[recreatie + "_aantal_binnen_5_km_klasse"] == klasse))]
+    return resultaat.to_dict(orient="records")
