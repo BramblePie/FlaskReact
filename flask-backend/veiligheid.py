@@ -60,6 +60,6 @@ print("Functions ready")
 def veiligheidAPI(plaats):
     # voor elke client/ bezoeker
     resultaat = misdrijven_df.loc[(misdrijven_df["Regio's"] == plaats)]
-    return resultaat.to_dict(orient="records")
+    return resultaat.to_dict(orient="index")
 
 #Klaar
