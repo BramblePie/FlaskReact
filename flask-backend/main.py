@@ -1,9 +1,12 @@
 from flask import Flask, render_template, Blueprint, request, url_for
 from flask_restplus import Api, Resource
 
+from Helper_functions import *
 # from notebooks.data_prep import get_gem_min_inw
 import notebooks.data_prep as notebook
 from demografie import demografieAPI
+from veiligheid import veiligheidAPI
+
 
 print("modeling")
 print("prep")
@@ -29,6 +32,16 @@ def Formulier():
 def Statistieken():
     return render_template ('Statistieken.html', title='Statistieken')
 
+@app.route('/statistieken', methods=['POST'])
+def my_form_post():
+    text = request.form['text']
+    df = demografieAPI(text)
+    json = table_converter(df)
+    return render_template ('Statistieken.html', title='Statistieken', df=df, json=json)
+
+    
+
+
 # API Controllers
 import random, math
 
@@ -47,9 +60,14 @@ class AantalInwoners(Resource):
         """Get all gemeentes met minimaal zoveel inwoners"""
         return notebook.get_gem_min_inw(inwoners)
 
-
 @api.route("/demografie/<string:text>")
 class DemografieFrame(Resource):
     def get(self, text):
         """Test functie demografie"""
         return demografieAPI(text)
+
+@api.route("/veiligheid/<string:plaats>")
+class VeiligheidFrame(Resource):
+    def get(self, plaats):
+        """Functie misdaadcijfers plaats"""
+        return veiligheidAPI(plaats)
