@@ -22,7 +22,7 @@ df_recreatie = df_recreatie[['aantal_woningen','aantal_woningen_bouwjaar_voor_19
 
 
 # %%
-zipfile = "zip://flask-backend/Postcode4.zip"
+zipfile = "zip://raw-data/Postcode4.zip"
 df = gpd.read_file(zipfile)
 
 
@@ -109,7 +109,7 @@ for x in lijst:
 df_recreatie_formulier = df_recreatie_formulier.rename(columns={"PC4": "postcode"})
 df_recreatie = df_recreatie.rename(columns={"PC4": "postcode"})
 # %%
-df_toevoeging = pd.read_csv('flask-backend/dataset.csv')
+df_toevoeging = pd.read_csv('raw-data/dataset.csv')
 df_toevoeging = df_toevoeging[['postcode','gemeente']]
 
 # %%
