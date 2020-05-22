@@ -40,15 +40,15 @@ def Veiligheid():
 def demografie_form_post():
     text = request.form['text']
     df = demografieAPI(text)
-    json = table_converter(df)
-    return render_template ('Statistieken.html', title='Statistieken', json=json)
+    json_demografie = table_converter(df)
+    return render_template ('Statistieken.html', title='Statistieken', json_demografie=json_demografie)
 
 @app.route('/veiligheid', methods=['POST'])
 def veiligheid_form_post():
     text = request.form['text']
     dfv = veiligheidAPI(text)
-    jsonv = table_converter(dfv)
-    return render_template ('Veiligheid.html', title='Misdaad', jsonv=jsonv)   
+    json_veiligheid = table_converter(dfv)
+    return render_template ('Veiligheid.html', title='Misdaad', json_veiligheid=json_veiligheid)   
 
 
 # API Controllers
