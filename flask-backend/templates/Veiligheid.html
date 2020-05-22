@@ -4,10 +4,11 @@
 {% endblock content%}
 
 {% block inhoud%}
-    {{ json_veiligheid|safe }}
+<h2>Kaart</h2>
+<p>Hier kan een kaart worden weergegeven</p>
 {% endblock inhoud%} 
 
 {% block inhoud2%}
-<h2>Statistieken</h2>
-<p>Hier kunnen dan gemeente statistieken worden weergegeven</p>
+<h2> Statistieken </h2>
+{{ json_veiligheid|safe }}
 {% endblock inhoud2%}
