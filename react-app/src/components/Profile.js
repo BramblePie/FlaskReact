@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Profile.css'
-
+import './Profile.css';
 
 function Profile(props) {
 
@@ -13,6 +12,7 @@ function Profile(props) {
     return (
         <div class="profile">
             <h2>Profiel</h2>
+            <h1>YOOYOYO</h1>
             <input type="number" min="0" step="1000"
                 value={aant_inw} onChange={(e) => setAant_inw(e.target.value)} />
         </div>
