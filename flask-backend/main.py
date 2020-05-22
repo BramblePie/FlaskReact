@@ -1,13 +1,14 @@
 from flask import Flask, render_template, Blueprint, request, url_for
 from flask_restplus import Api, Resource
 
+
 from Helper_functions import *
 # from notebooks.data_prep import get_gem_min_inw
 import notebooks.data_prep as notebook
 from demografie import demografieAPI
 from veiligheid import veiligheidAPI
+# from wozwaarde import wozwaardeAPI
 
-from wozwaarde import wozwaardeAPI
 
 
 print("modeling")
@@ -83,8 +84,8 @@ class VeiligheidFrame(Resource):
         """Functie misdaadcijfers plaats"""
         return veiligheidAPI(plaats)
 
-@api.route("/wozwaarde/<string:gemeente>")
-class Gemeentenaam(Resource):
-    def get(self, gemeente):
-        """Get all wozwaarde bij een bepaalde gemeente"""
-        return wozwaardeAPI(gemeente)
+# @api.route("/wozwaarde/<string:gemeente>")
+# class Gemeentenaam(Resource):
+#     def get(self, gemeente):
+#         """Get all wozwaarde bij een bepaalde gemeente"""
+#         return wozwaardeAPI(gemeente)

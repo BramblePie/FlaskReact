@@ -1,6 +1,5 @@
 from Helper_functions import *
 
-
 =======
 >>>>>>> Stashed changes
 data = pd.read_csv('flask-backend/raw-data/dataset.csv')
