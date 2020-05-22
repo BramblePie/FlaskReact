@@ -7,6 +7,8 @@ import notebooks.data_prep as notebook
 from demografie import demografieAPI
 from veiligheid import veiligheidAPI
 
+from wozwaarde import wozwaardeAPI
+
 
 print("modeling")
 print("prep")
@@ -80,3 +82,9 @@ class VeiligheidFrame(Resource):
     def get(self, plaats):
         """Functie misdaadcijfers plaats"""
         return veiligheidAPI(plaats)
+
+@api.route("/wozwaarde/<string:gemeente>")
+class Gemeentenaam(Resource):
+    def get(self, gemeente):
+        """Get all wozwaarde bij een bepaalde gemeente"""
+        return wozwaardeAPI(gemeente)
