@@ -7,6 +7,7 @@ from Helper_functions import *
 import notebooks.data_prep as notebook
 from demografie import demografieAPI
 from veiligheid import veiligheidAPI
+from demografie_gemeente import DemografieAPI_gemeenten
 # from wozwaarde import wozwaardeAPI
 
 
@@ -89,3 +90,9 @@ class VeiligheidFrame(Resource):
 #     def get(self, gemeente):
 #         """Get all wozwaarde bij een bepaalde gemeente"""
 #         return wozwaardeAPI(gemeente)
+
+@api.route("/demografie_gemeente/<string:text>")
+class DemografiegemeenteFrame(Resource):
+    def get (self, text):
+        """Functie gemeente demografie"""
+        return DemografieAPI_gemeenten(text)
