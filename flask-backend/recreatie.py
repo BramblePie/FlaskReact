@@ -1,15 +1,15 @@
 from Helper_functions import *
 
-#test1 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",0)
-#test2 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",1000)
-#test3 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",2000)
-#test4 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",3000)
-#test5 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",4000)
+test1 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",0)
+test2 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",1000)
+test3 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",2000)
+test4 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",3000)
+test5 = wfs_data("https://geodata.nationaalgeoregister.nl/cbspostcode4/wfs?language=eng&", "cbspostcode4:postcode42017",4000)
 
 
-#df_recreatie = pd.concat([test1, test2, test3, test4, test5], ignore_index=True)
+df_recreatie = pd.concat([test1, test2, test3, test4, test5], ignore_index=True)
 
-df_recreatie = pd.read_csv('raw-data/recreatie_nieuw.csv', index_col=0)
+#df_recreatie = pd.read_csv('raw-data/recreatie_nieuw.csv', index_col=0)
 
 # Info over de kolommen in perceelprijzen
 info_kolommen_recreatie = df_recreatie.info()
@@ -24,7 +24,7 @@ df_recreatie.columns
 df_recreatie.isna().sum()
 
 #Dataframe maken van alleen recreatie onderdelen binnen 5km
-df_recreatie = df_recreatie[['winkels_ov_dagel_levensm_aantal_binnen_5_km', 'warenhuis_aantal_binnen_5_km', 'cafe_aantal_binnen_5_km', 'cafetaria_aantal_binnen_5_km', 'restaurant_aantal_binnen_5_km', 'hotel_aantal_binnen_5_km']]
+df_recreatie = df_recreatie[['aantal_inwoners','winkels_ov_dagel_levensm_aantal_binnen_5_km', 'warenhuis_aantal_binnen_5_km', 'cafe_aantal_binnen_5_km', 'cafetaria_aantal_binnen_5_km', 'restaurant_aantal_binnen_5_km', 'hotel_aantal_binnen_5_km']]
 
 #postcode zip inladen
 zipfile = "zip://raw-data/Postcode4.zip"
@@ -35,6 +35,7 @@ df_recreatie = pd.concat([df_recreatie, df['PC4']], axis=1)
 df_recreatie = df_recreatie.rename(columns={"PC4": "postcode"})
 df_recreatie = movecol(df_recreatie, cols_to_move=['postcode'], ref_col='winkels_ov_dagel_levensm_aantal_binnen_5_km', place='After')
 df_recreatie = movecol(df_recreatie, cols_to_move=['winkels_ov_dagel_levensm_aantal_binnen_5_km'], ref_col='postcode', place='After')
+df_recreatie = movecol(df_recreatie, cols_to_move=['aantal_inwoners'], ref_col='postcode', place='After')
 
 df = pd.read_csv('raw-data/postcode_gemeente.csv', index_col=0)
 df = df.rename(columns={"Gemeentenaam2019":"gemeente"})
@@ -79,4 +80,12 @@ corr = df_recreatie.corr()
 
 def recreatieAPI(recreatie, klasse):
     resultaat = df_recreatie.loc[((df_recreatie[recreatie + "_aantal_binnen_5_km_klasse"] == klasse))]
+    resultaat = resultaat[['postcode', 'gemeente', 'winkels_ov_dagel_levensm_aantal_binnen_5_km',
+       'winkels_ov_dagel_levensm_aantal_binnen_5_km_klasse',
+       'warenhuis_aantal_binnen_5_km',
+       'warenhuis_aantal_binnen_5_km_klasse', 'cafe_aantal_binnen_5_km',
+       'cafe_aantal_binnen_5_km_klasse', 'cafetaria_aantal_binnen_5_km',
+       'cafetaria_aantal_binnen_5_km_klasse', 'restaurant_aantal_binnen_5_km',
+       'restaurant_aantal_binnen_5_km_klasse', 'hotel_aantal_binnen_5_km',
+       'hotel_aantal_binnen_5_km_klasse']]
     return resultaat.to_dict(orient="records")
