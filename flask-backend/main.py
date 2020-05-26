@@ -44,6 +44,12 @@ def Veiligheid():
 def Wozwaarde():
     return render_template ('Wozwaarde.html', title='Wozwaarde')
 
+@app.route('/recreatie')
+def Recreatie():
+    return render_template ('Recreatie.html', title='Recreatie')
+
+
+
 @app.route('/demografie', methods=['POST'])
 def demografie_form_post():
     text = request.form['text']
