@@ -20,7 +20,6 @@ m3 = np.logical_and(data["woz_normalisatie"] > p50,data["woz_normalisatie"] < p7
 m4 = data["woz_normalisatie"] > p75
 data['klasse_woz'] = np.select([m1,m2,m3,m4], ['Laag','Middel','Middel-Hoog','Hoog'], default='none')
 data = data[['gemeente','postcode','gemiddelde_woz_waarde_woning','gemiddelde_woz_waarde_gemeente','klasse_woz']]
-data.to_csv('data/link/datasetwozfunctie.csv')
 wozwaarde = data
 
 def wozwaardeAPI(gemeente):
