@@ -52,8 +52,6 @@ def Recreatie():
 def Werkgelegenheid():
     return render_template ('Werkgelegenheid.html', title='Werkgelegenheid')
 
-
-
 @app.route('/demografie', methods=['POST'])
 def demografie_form_post():
     text = request.form['text']
