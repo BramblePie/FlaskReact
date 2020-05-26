@@ -32,20 +32,20 @@ def home():
 def Formulier():
     return render_template ('Formulier.html', title='Formulier')
 
-@app.route('/statistieken')
+@app.route('/demografie')
 def Statistieken():
-    return render_template ('Statistieken.html', title='Statistieken')
+    return render_template ('Demografie.html', title='Demografie')
 
 @app.route('/veiligheid')
 def Veiligheid():
     return render_template ('Veiligheid.html', title='Misdaad')
 
-@app.route('/statistieken', methods=['POST'])
+@app.route('/demografie', methods=['POST'])
 def demografie_form_post():
     text = request.form['text']
     df = demografieAPI(text)
     json_demografie = table_converter(df)
-    return render_template ('Statistieken.html', title='Statistieken', json_demografie=json_demografie)
+    return render_template ('Demografie.html', title='Demografie', json_demografie=json_demografie)
 
 @app.route('/veiligheid', methods=['POST'])
 def veiligheid_form_post():
