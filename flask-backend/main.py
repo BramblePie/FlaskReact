@@ -40,6 +40,10 @@ def Statistieken():
 def Veiligheid():
     return render_template ('Veiligheid.html', title='Misdaad')
 
+@app.route('/wozwaarde')
+def Wozwaarde():
+    return render_template ('Wozwaarde.html', title='Wozwaarde')
+
 @app.route('/demografie', methods=['POST'])
 def demografie_form_post():
     text = request.form['text']
@@ -52,7 +56,14 @@ def veiligheid_form_post():
     text = request.form['text']
     dfv = veiligheidAPI(text)
     json_veiligheid = table_converter(dfv)
-    return render_template ('Veiligheid.html', title='Misdaad', json_veiligheid=json_veiligheid)   
+    return render_template ('Veiligheid.html', title='Misdaad', json_veiligheid=json_veiligheid) 
+
+@app.route('/wozwaarde', methods=['POST'])
+def wozwaarde_form_post():
+    text = request.form['text']
+    dfw = veiligheidAPI(text)
+    json_wozwaarde = table_converter(dfw)
+    return render_template ('Wozwaarde_html', title='Wozwaarde', json_wozwaarde=json_wozwaarde)   
 
 
 # API Controllers
