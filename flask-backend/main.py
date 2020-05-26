@@ -63,7 +63,7 @@ def wozwaarde_form_post():
     text = request.form['text']
     dfw = veiligheidAPI(text)
     json_wozwaarde = table_converter(dfw)
-    return render_template ('Wozwaarde_html', title='Wozwaarde', json_wozwaarde=json_wozwaarde)   
+    return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde)   
 
 
 # API Controllers
@@ -96,11 +96,11 @@ class VeiligheidFrame(Resource):
         """Functie misdaadcijfers plaats"""
         return veiligheidAPI(plaats)
 
-# @api.route("/wozwaarde/<string:gemeente>")
-# class Gemeentenaam(Resource):
-#     def get(self, gemeente):
-#         """Get all wozwaarde bij een bepaalde gemeente"""
-#         return wozwaardeAPI(gemeente)
+@api.route("/wozwaarde/<string:gemeente>")
+class Wozwaarde(Resource):
+    def get(self, gemeente):
+        """Get all wozwaarde bij een bepaalde gemeente"""
+        return wozwaardeAPI(gemeente)
 
 @api.route("/demografie_gemeente/<string:text>")
 class DemografiegemeenteFrame(Resource):
