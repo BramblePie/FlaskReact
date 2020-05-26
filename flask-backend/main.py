@@ -8,7 +8,7 @@ import notebooks.data_prep as notebook
 from demografie import demografieAPI
 from veiligheid import veiligheidAPI
 from demografie_gemeente import DemografieAPI_gemeenten
-# from wozwaarde import wozwaardeAPI
+from wozwaarde import wozwaardeAPI
 
 
 
@@ -48,6 +48,10 @@ def Wozwaarde():
 def Recreatie():
     return render_template ('Recreatie.html', title='Recreatie')
 
+@app.route('/werkgelegenheid')
+def Werkgelegenheid():
+    return render_template ('Werkgelegenheid.html', title='Werkgelegenheid')
+
 
 
 @app.route('/demografie', methods=['POST'])
@@ -71,6 +75,19 @@ def wozwaarde_form_post():
     json_wozwaarde = table_converter(dfw)
     return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde)   
 
+# @app.route('/recreatie', methods=['POST'])
+# def wozwaarde_form_post():
+#     text = request.form['text']
+#     dfw = veiligheidAPI(text)
+#     json_wozwaarde = table_converter(dfw)
+#     return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde) 
+
+# @app.route('/Werkgelegenheid', methods=['POST'])
+# def wozwaarde_form_post():
+#     text = request.form['text']
+#     dfw = veiligheidAPI(text)
+#     json_wozwaarde = table_converter(dfw)
+#     return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde) 
 
 # API Controllers
 import random, math

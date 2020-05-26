@@ -1,7 +1,5 @@
 from Helper_functions import *
 
-=======
->>>>>>> Stashed changes
 data = pd.read_csv('flask-backend/raw-data/dataset.csv')
 data = data[['gemeente','postcode','gemiddelde_woz_waarde_woning','geometry']]
 gemiddeldewoz = data[['gemeente','gemiddelde_woz_waarde_woning']].groupby('gemeente').mean()
