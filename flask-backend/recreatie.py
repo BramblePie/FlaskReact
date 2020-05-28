@@ -15,7 +15,7 @@ beschrijvende_stats_recreatie = df_recreatie.describe(exclude='geometry')
 df_recreatie = df_recreatie[['aantal_inwoners','winkels_ov_dagel_levensm_aantal_binnen_5_km', 'warenhuis_aantal_binnen_5_km', 'cafe_aantal_binnen_5_km', 'cafetaria_aantal_binnen_5_km', 'restaurant_aantal_binnen_5_km', 'hotel_aantal_binnen_5_km']]
 
 #postcode zip inladen
-zipfile = "zip://raw-data/Postcode4.zip"
+zipfile = "flask-backend/raw-data/Postcode4.zip"
 df = gpd.read_file(zipfile)
 
 #Postcodezip en df samenvoegen en hernoemen
