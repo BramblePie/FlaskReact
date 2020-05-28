@@ -50,6 +50,19 @@ def wfs_data(wfs_url, type_param):
     q = Request('GET', url, params=params).prepare().url
     return gpd.read_file(q)
 
+def wfs_data_rec(wfs_url, type_param, startindex):
+    url=wfs_url 
+    wfs = WebFeatureService(url=url)
+    # Laatste beschikbare versie pakken
+    layer = list(wfs.contents)[-1]
+    # Specificeren van de parameters van de data
+    params = dict(service='WFS', version="1.0.0", request='GetFeature', typeName=type_param, outputFormat='json', StartIndex=startindex)
+    q = Request('GET', url, params=params).prepare().url
+    return gpd.read_file(q)
+
+
+# FUNCTIE VOOR HET MAKEN VAN EEN HTML TABEL AAN DE HAND VAN JSON
+# --------------------------------------
 def table_converter(json):
     json_object = json
     build_direction = "LEFT_TO_RIGHT"
@@ -57,6 +70,8 @@ def table_converter(json):
     html = convert(json_object, build_direction=build_direction, table_attributes=table_attributes)
     return html
 
+# FUNCTIE VOOR HET VERPLAATSEN VAN KOLOMMEN
+# --------------------------------------
 def movecol(df, cols_to_move=[], ref_col='', place='After'):
 
     cols = df.columns.tolist()

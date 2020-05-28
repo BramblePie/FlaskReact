@@ -118,7 +118,7 @@ class VeiligheidFrame(Resource):
         return veiligheidAPI(plaats)
 
 @api.route("/wozwaarde/<string:gemeente>")
-class Wozwaarde(Resource):
+class WozwaardeFrame(Resource):
     def get(self, gemeente):
         """Get all wozwaarde bij een bepaalde gemeente"""
         return wozwaardeAPI(gemeente)
