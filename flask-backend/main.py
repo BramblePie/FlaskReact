@@ -1,15 +1,15 @@
 from flask import Flask, render_template, Blueprint, request, url_for
 from flask_restplus import Api, Resource
-
-
 from Helper_functions import *
-# from notebooks.data_prep import get_gem_min_inw
+
+
 import notebooks.data_prep as notebook
 from demografie import demografieAPI
 from veiligheid import veiligheidAPI
 from demografie_gemeente import DemografieAPI_gemeenten
 from wozwaarde import wozwaardeAPI
-
+from werkgelegenheid import werkgelegenheidAPI
+from recreatie import recreatieAPI
 
 
 print("modeling")
@@ -55,37 +55,37 @@ def Werkgelegenheid():
 @app.route('/demografie', methods=['POST'])
 def demografie_form_post():
     text = request.form['text']
-    df = demografieAPI(text)
-    json_demografie = table_converter(df)
+    df_demografie = demografieAPI(text)
+    json_demografie = table_converter(df_demografie)
     return render_template ('Demografie.html', title='Demografie', json_demografie=json_demografie)
 
 @app.route('/veiligheid', methods=['POST'])
 def veiligheid_form_post():
     text = request.form['text']
-    dfv = veiligheidAPI(text)
-    json_veiligheid = table_converter(dfv)
+    df_veiligheid = veiligheidAPI(text)
+    json_veiligheid = table_converter(df_veiligheid)
     return render_template ('Veiligheid.html', title='Misdaad', json_veiligheid=json_veiligheid) 
 
 @app.route('/wozwaarde', methods=['POST'])
 def wozwaarde_form_post():
     text = request.form['text']
-    dfw = veiligheidAPI(text)
-    json_wozwaarde = table_converter(dfw)
+    df_wozwaarde = veiligheidAPI(text)
+    json_wozwaarde = table_converter(df_wozwaarde)
     return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde)   
 
-# @app.route('/recreatie', methods=['POST'])
-# def wozwaarde_form_post():
-#     text = request.form['text']
-#     dfw = veiligheidAPI(text)
-#     json_wozwaarde = table_converter(dfw)
-#     return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde) 
+@app.route('/recreatie', methods=['POST'])
+def recreatie_form_post():
+    text = request.form['text']
+    df_recreatie = veiligheidAPI(text)
+    json_recreatie = table_converter(df_recreatie)
+    return render_template ('Recreatie.html', title='Recreatie', json_recreatie=json_recreatie) 
 
-# @app.route('/Werkgelegenheid', methods=['POST'])
-# def wozwaarde_form_post():
-#     text = request.form['text']
-#     dfw = veiligheidAPI(text)
-#     json_wozwaarde = table_converter(dfw)
-#     return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde) 
+@app.route('/werkgelegenheid', methods=['POST'])
+def werkgelegenheid_form_post():
+    text = request.form['text']
+    df_werkgelegenheid = veiligheidAPI(text)
+    json_werkgelegenheid = table_converter(df_werkgelegenheid)
+    return render_template ('Werkgelegenheid.html', title='Werkgelegenheid', json_werkgelegenheid=json_werkgelegenheid) 
 
 # API Controllers
 import random, math
@@ -128,3 +128,20 @@ class DemografiegemeenteFrame(Resource):
     def get (self, text):
         """Functie gemeente demografie"""
         return DemografieAPI_gemeenten(text)
+
+
+@api.route('/recreatie/<string:recreatie>')
+@api.doc(params={'recreatie': {'description': 'Recreatietype, bijvoorbeeld: hotel'},
+                 'klasse': {'description': 'Klasse van het recreatietype', 'in': 'query', 'type': 'string', 'required' : 'True'}})
+class RecreatieFrame(Resource):
+    def get(self, recreatie):
+        klasse = str(request.args.get('klasse'))
+        return recreatieAPI(recreatie, klasse)  
+
+@api.route('/werkgelegenheid/<string:branche_code>')
+@api.doc(params={'branche_code': {'description': 'Code van de branche'},
+                 'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string', 'required' : 'True'}})
+class WerkgelegenheidFrame(Resource):
+    def get(self, branche_code):
+        klasse = str(request.args.get('klasse'))
+        return werkgelegenheidAPI(branche_code, klasse)
