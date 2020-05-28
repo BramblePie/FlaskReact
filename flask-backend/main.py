@@ -9,7 +9,7 @@ from veiligheid import veiligheidAPI
 from demografie_gemeente import DemografieAPI_gemeenten
 from wozwaarde import wozwaardeAPI
 from werkgelegenheid import werkgelegenheidAPI
-from recreatie import recreatieAPI
+# from recreatie import recreatieAPI
 
 
 print("modeling")
@@ -129,14 +129,14 @@ class DemografiegemeenteFrame(Resource):
         """Functie gemeente demografie"""
         return DemografieAPI_gemeenten(text)
 
-
-@api.route('/recreatie/<string:recreatie>')
-@api.doc(params={'recreatie': {'description': 'Recreatietype, bijvoorbeeld: hotel'},
-                 'klasse': {'description': 'Klasse van het recreatietype', 'in': 'query', 'type': 'string', 'required' : 'True'}})
-class RecreatieFrame(Resource):
-    def get(self, recreatie):
-        klasse = str(request.args.get('klasse'))
-        return recreatieAPI(recreatie, klasse)  
+# Ik mis een raw data file voor dit
+# @api.route('/recreatie/<string:recreatie>')
+# @api.doc(params={'recreatie': {'description': 'Recreatietype, bijvoorbeeld: hotel'},
+#                  'klasse': {'description': 'Klasse van het recreatietype', 'in': 'query', 'type': 'string', 'required' : 'True'}})
+# class RecreatieFrame(Resource):
+#     def get(self, recreatie):
+#         klasse = str(request.args.get('klasse'))
+#         return recreatieAPI(recreatie, klasse)  
 
 @api.route('/werkgelegenheid/<string:branche_code>')
 @api.doc(params={'branche_code': {'description': 'Code van de branche'},
