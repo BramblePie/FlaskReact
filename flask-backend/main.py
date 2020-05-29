@@ -181,3 +181,9 @@ class WerkgelegenheidPlaats(Resource):
         return werkgelegenheid_plaatsAPI(plaats)
 
 print("Alles is geladen, je kan nu de browser controleren.")
+
+
+# Demografie_Gemeente API fixen, krijg geen output
+# Veiligheid API fixen, verkeerde format die teruggegeven wordt
+# Werkgelgeneheid API fixen
+# Recreatie toevoegen
