@@ -186,4 +186,4 @@ print("Alles is geladen, je kan nu de browser controleren.")
 # Demografie_Gemeente API fixen, krijg geen output
 # Veiligheid API fixen, verkeerde format die teruggegeven wordt
 # Werkgelgeneheid API fixen
-# Recreatie toevoegen
+# Recreatie toevoegen, gehele api en misschien nieuwe api maken op basis van gemeente
