@@ -2,6 +2,7 @@ from flask import Flask, render_template, Blueprint, request, url_for
 from flask_restplus import Api, Resource
 from Helper_functions import *
 
+print("Import Succes")
 
 import notebooks.data_prep as notebook
 from demografie import demografieAPI
@@ -10,7 +11,6 @@ from demografie_gemeente import DemografieAPI_gemeenten
 from wozwaarde import wozwaardeAPI
 from werkgelegenheid import werkgelegenheidAPI
 # from recreatie import recreatieAPI
-
 
 print("modeling")
 print("prep")
@@ -145,3 +145,4 @@ class WerkgelegenheidFrame(Resource):
     def get(self, branche_code):
         klasse = str(request.args.get('klasse'))
         return werkgelegenheidAPI(branche_code, klasse)
+print("Alles is geladen, je kan nu de browser controleren.")

@@ -1,8 +1,8 @@
 from Helper_functions import *
 
 # Dataset inlezen
-file = "flask-backend/raw-data/Vestigingen_Gemeente.csv"
-postcode_file = "flask-backend/raw-data/gemeenten-provincie.xlsx"
+file = "raw-data/Vestigingen__gemeente.csv"
+postcode_file = "raw-data/gemeenten-provincie.xlsx"
 data_pc = pd.read_excel(postcode_file)
 data_vg = pd.read_csv(file, sep=";")
 
@@ -38,3 +38,4 @@ werkgelegenheid_df= werkgelegenheid_geprept.drop(columns='Bedrijfstakken/branche
 def werkgelegenheidAPI(branche_code, klasse):
     resultaat = werkgelegenheid_df.loc[((werkgelegenheid_df["Bedrijfstak_code"] == branche_code) & (werkgelegenheid_df["Vestigingen Klasse"] == klasse))]
     return resultaat.to_dict(orient="records")
+print("Gefixed")
