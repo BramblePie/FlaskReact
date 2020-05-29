@@ -11,6 +11,7 @@ from veiligheid import veiligheidAPI
 from wozwaarde import wozwaardeAPI
 # from werkgelegenheid import werkgelegenheidAPI
 # from recreatie import recreatieAPI
+from formulier import formulierAPI
 
 print("modeling")
 print("prep")
@@ -52,7 +53,7 @@ def formulieroutput():
     Bedrijfstakinput = request.form["Bedrijfstakinput"]
     werkgelegenheidinput = request.form["werkgelegenheidinput"]
     output = formulierAPI(stedelijkheidinput,wozinput,werkgelegenheidinput,Bedrijfstakinput,misdaadinput)
-    return render_template("formulieroutput.html",tables=[output.to_html(classes='data',index = False)], titles=output.columns.values)
+    return render_template("Formulieroutput.html",tables=[output.to_html(classes='data',index = False)], titles=output.columns.values)
 
 
 @app.route('/demografie')
@@ -170,4 +171,5 @@ class WozwaardeFrame(Resource):
 #     def get(self, branche_code):
 #         klasse = str(request.args.get('klasse'))
 #         return werkgelegenheidAPI(branche_code, klasse)
+
 print("Alles is geladen, je kan nu de browser controleren.")
