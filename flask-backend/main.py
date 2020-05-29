@@ -7,9 +7,9 @@ print("Import Succes")
 import notebooks.data_prep as notebook
 from demografie import demografieAPI
 from veiligheid import veiligheidAPI
-# from demografie_gemeente import DemografieAPI_gemeenten
+from demografie_gemeente import DemografieAPI_gemeenten
 from wozwaarde import wozwaardeAPI
-# from werkgelegenheid import werkgelegenheidAPI
+from werkgelegenheid import werkgelegenheidAPI, werkgelegenheid_plaatsAPI
 # from recreatie import recreatieAPI
 from formulier import formulierAPI
 
@@ -108,13 +108,13 @@ def wozwaarde_form_post():
 #    json_recreatie = table_converter(df_recreatie)
 #    return render_template ('Recreatie.html', title='Recreatie', json_recreatie=json_recreatie) 
 
-# @app.route('/werkgelegenheid', methods=['POST'])
-# def werkgelegenheid_form_post():
-#    text = request.form['text']
-#    text2 = request.form['text2']
-#    df_werkgelegenheid = werkgelegenheidAPI(text, text2)
-#    json_werkgelegenheid = table_converter(df_werkgelegenheid)
-#    return render_template ('Werkgelegenheid.html', title='Werkgelegenheid', json_werkgelegenheid=json_werkgelegenheid) 
+@app.route('/werkgelegenheid', methods=['POST'])
+def werkgelegenheid_form_post():
+   text = request.form['text']
+   text2 = request.form['text2']
+   df_werkgelegenheid = werkgelegenheidAPI(text, text2)
+   json_werkgelegenheid = table_converter(df_werkgelegenheid)
+   return render_template ('Werkgelegenheid.html', title='Werkgelegenheid', json_werkgelegenheid=json_werkgelegenheid) 
 
 # API Controllers
 import random, math
@@ -152,11 +152,11 @@ class WozwaardeFrame(Resource):
         """Get all wozwaarde bij een bepaalde gemeente"""
         return wozwaardeAPI(gemeente)
 
-# @api.route("/demografie_gemeente/<string:text>")
-# class DemografiegemeenteFrame(Resource):
-#     def get (self, text):
-#         """Functie gemeente demografie"""
-#         return DemografieAPI_gemeenten(text)
+@api.route("/demografie_gemeente/<string:text>")
+class DemografiegemeenteFrame(Resource):
+    def get (self, text):
+        """Functie gemeente demografie"""
+        return DemografieAPI_gemeenten(text)
 
 # Ik mis een raw data file voor dit
 # @api.route('/recreatie/<string:recreatie>')
@@ -167,13 +167,13 @@ class WozwaardeFrame(Resource):
 #         klasse = str(request.args.get('klasse'))
 #         return recreatieAPI(recreatie, klasse)  
 
-# @api.route('/werkgelegenheid/<string:branche_code>')
-# @api.doc(params={'branche_code': {'description': 'Code van de branche'},
-#                  'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string', 'required' : 'True'}})
-# class WerkgelegenheidFrame(Resource):
-#     def get(self, branche_code):
-#         klasse = str(request.args.get('klasse'))
-#         return werkgelegenheidAPI(branche_code, klasse)
+@api.route('/werkgelegenheid/<string:branche_code>')
+@api.doc(params={'branche_code': {'description': 'Code van de branche'},
+                 'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string', 'required' : 'True'}})
+class WerkgelegenheidFrame(Resource):
+    def get(self, branche_code):
+        klasse = str(request.args.get('klasse'))
+        return werkgelegenheidAPI(branche_code, klasse)
 
 @api.route('/werkgelegenheid_plaats/<string:plaats>')
 class WerkgelegenheidPlaats(Resource):
