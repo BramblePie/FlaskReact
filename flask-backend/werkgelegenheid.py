@@ -39,3 +39,7 @@ def werkgelegenheidAPI(branche_code, klasse):
     resultaat = werkgelegenheid_df.loc[((werkgelegenheid_df["Bedrijfstak_code"] == branche_code) & (werkgelegenheid_df["Vestigingen Klasse"] == klasse))]
     return resultaat.to_dict(orient="records")
 print("Gefixed")
+
+def werkgelegenheid_plaatsAPI(plaats):
+    plaats_resultaat = werkgelegenheid_df.loc[werkgelegenheid_df["Regio's"] == plaats]
+    return plaats_resultaat.to_dict(orient="index")

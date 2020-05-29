@@ -43,18 +43,21 @@ def Formulier():
        'Cultuur, sport en recreatie', 'Overige dienstverlening',
        'Extraterritoriale organisaties']
     werkgelegenheidinput = ['Hoog', 'Geen', 'Middel-Hoog', 'Middel']
-    return render_template('Formulier.html', misdaadinput=misdaadinput,wozinput=wozinput,stedelijkheidinput=stedelijkheidinput,Bedrijfstakinput=Bedrijfstakinput,werkgelegenheidinput=werkgelegenheidinput)
+    return render_template('Formulier.html', misdaadinput=misdaadinput,wozinput=wozinput,stedelijkheidinput=stedelijkheidinput,werkgelegenheidinput=werkgelegenheidinput)
+
+    # Bedrijfstakinput=Bedrijfstakinput
 
 @app.route('/formulieroutput', methods=['POST'])
 def formulieroutput():
     wozinput = request.form["wozinput"]
     misdaadinput = request.form["misdaadinput"]
     stedelijkheidinput = request.form["stedelijkheidinput"]
-    Bedrijfstakinput = request.form["Bedrijfstakinput"]
+    # Bedrijfstakinput = request.form["Bedrijfstakinput"]
     werkgelegenheidinput = request.form["werkgelegenheidinput"]
-    output = formulierAPI(stedelijkheidinput,wozinput,werkgelegenheidinput,Bedrijfstakinput,misdaadinput)
+    output = formulierAPI(stedelijkheidinput,wozinput,werkgelegenheidinput,misdaadinput)
     return render_template("Formulieroutput.html",tables=[output.to_html(classes='data',index = False)], titles=output.columns.values)
 
+# ,Bedrijfstakinput
 
 @app.route('/demografie')
 def Statistieken():
@@ -171,5 +174,10 @@ class WozwaardeFrame(Resource):
 #     def get(self, branche_code):
 #         klasse = str(request.args.get('klasse'))
 #         return werkgelegenheidAPI(branche_code, klasse)
+
+@api.route('/werkgelegenheid_plaats/<string:plaats>')
+class WerkgelegenheidPlaats(Resource):
+    def get(self, plaats):
+        return werkgelegenheid_plaatsAPI(plaats)
 
 print("Alles is geladen, je kan nu de browser controleren.")

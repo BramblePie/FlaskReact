@@ -19,7 +19,11 @@ data = data.merge(datawerk, on='gemeente')
 data = data.drop_duplicates()
 data = data.merge(datamisdaad, on='gemeente')
 data = data.drop_duplicates()
-def formulierAPI(stedelijkheidinput,wozinput,werkgelegenheidinput,Bedrijfstakinput,misdaadinput):
-    resultaat = data.loc[(data['klasse_stedelijkheid_normalisatie'] == stedelijkheidinput) & (data['klasse_woz'] == wozinput)& (data['Vestigingen Klasse'] == werkgelegenheidinput) & (data['Bedrijfstak'] == Bedrijfstakinput)& (data['Aantal_misdrijven_klasse'] == misdaadinput)]
+def formulierAPI(stedelijkheidinput,wozinput,werkgelegenheidinput,misdaadinput):
+    resultaat = data.loc[(data['klasse_stedelijkheid_normalisatie'] == stedelijkheidinput) & (data['klasse_woz'] == wozinput)& (data['Vestigingen Klasse'] == werkgelegenheidinput) & (data['Aantal_misdrijven_klasse'] == misdaadinput)]
     output = resultaat[['gemeente']].drop_duplicates()
     return output
+
+
+# Bedrijfstakinput
+# & (data['Bedrijfstak'] == Bedrijfstakinput)
