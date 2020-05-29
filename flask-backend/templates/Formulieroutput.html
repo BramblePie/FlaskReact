@@ -1,0 +1,20 @@
+{% extends "Layout2.html" %}
+{% block content %}
+    <h1>Uitkomsten formulier</h1>
+{% endblock content%}
+
+{% block inhoud%}
+<h2>Uitlsag</h2>
+<p>Gemeenten die bij u passen:</p>
+<br>
+{% for table in tables %}
+            {{titles[loop.index]}}
+            {{ table|safe }}
+{% endfor %}
+
+{% endblock inhoud%}
+
+{% block inhoud2%}
+<h2>Statistieken</h2>
+{{ json_demografie|safe }}
+{% endblock inhoud2%}

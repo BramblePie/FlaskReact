@@ -7,10 +7,10 @@ print("Import Succes")
 import notebooks.data_prep as notebook
 from demografie import demografieAPI
 from veiligheid import veiligheidAPI
-from demografie_gemeente import DemografieAPI_gemeenten
+# from demografie_gemeente import DemografieAPI_gemeenten
 from wozwaarde import wozwaardeAPI
-from werkgelegenheid import werkgelegenheidAPI
-from recreatie import recreatieAPI
+# from werkgelegenheid import werkgelegenheidAPI
+# from recreatie import recreatieAPI
 
 print("modeling")
 print("prep")
@@ -25,12 +25,35 @@ app.register_blueprint(blueprint)
 # Single page application
 @app.route("/")
 def home():
-    # Alles wordt gecompiled in één pagina: index.html
     return render_template("Dashboard.html")
 
-@app.route('/formulier')
+@app.route('/formulier', methods=['GET', 'POST'])
 def Formulier():
-    return render_template ('Formulier.html', title='Formulier')
+    wozinput = ['Laag','Middel','Hoog','Heel-Hoog']
+    misdaadinput = ['Laag','Middel','Hoog']
+    stedelijkheidinput = ['Middel', 'Middel-Hoog', 'Hoog', 'Laag']
+    Bedrijfstakinput = ['Landbouw, bosbouw en visserij', 'Delfstoffenwinning', 'Industrie',
+       'Energievoorziening', 'Waterbedrijven en afvalbeheer',
+       'Bouwnijverheid', 'Handel', 'Vervoer en opslag', 'Horeca',
+       'Informatie en communicatie', 'Financiële dienstverlening',
+       'Verhuur en handel van onroerend goed',
+       'Specialistische zakelijke diensten',
+       'Verhuur en overige zakelijke diensten',
+       'Cultuur, sport en recreatie', 'Overige dienstverlening',
+       'Extraterritoriale organisaties']
+    werkgelegenheidinput = ['Hoog', 'Geen', 'Middel-Hoog', 'Middel']
+    return render_template('Formulier.html', misdaadinput=misdaadinput,wozinput=wozinput,stedelijkheidinput=stedelijkheidinput,Bedrijfstakinput=Bedrijfstakinput,werkgelegenheidinput=werkgelegenheidinput)
+
+@app.route('/formulieroutput', methods=['POST'])
+def formulieroutput():
+    wozinput = request.form["wozinput"]
+    misdaadinput = request.form["misdaadinput"]
+    stedelijkheidinput = request.form["stedelijkheidinput"]
+    Bedrijfstakinput = request.form["Bedrijfstakinput"]
+    werkgelegenheidinput = request.form["werkgelegenheidinput"]
+    output = formulierAPI(stedelijkheidinput,wozinput,werkgelegenheidinput,Bedrijfstakinput,misdaadinput)
+    return render_template("formulieroutput.html",tables=[output.to_html(classes='data',index = False)], titles=output.columns.values)
+
 
 @app.route('/demografie')
 def Statistieken():
@@ -125,11 +148,11 @@ class WozwaardeFrame(Resource):
         """Get all wozwaarde bij een bepaalde gemeente"""
         return wozwaardeAPI(gemeente)
 
-@api.route("/demografie_gemeente/<string:text>")
-class DemografiegemeenteFrame(Resource):
-    def get (self, text):
-        """Functie gemeente demografie"""
-        return DemografieAPI_gemeenten(text)
+# @api.route("/demografie_gemeente/<string:text>")
+# class DemografiegemeenteFrame(Resource):
+#     def get (self, text):
+#         """Functie gemeente demografie"""
+#         return DemografieAPI_gemeenten(text)
 
 # Ik mis een raw data file voor dit
 # @api.route('/recreatie/<string:recreatie>')
@@ -140,11 +163,11 @@ class DemografiegemeenteFrame(Resource):
 #         klasse = str(request.args.get('klasse'))
 #         return recreatieAPI(recreatie, klasse)  
 
-@api.route('/werkgelegenheid/<string:branche_code>')
-@api.doc(params={'branche_code': {'description': 'Code van de branche'},
-                 'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string', 'required' : 'True'}})
-class WerkgelegenheidFrame(Resource):
-    def get(self, branche_code):
-        klasse = str(request.args.get('klasse'))
-        return werkgelegenheidAPI(branche_code, klasse)
+# @api.route('/werkgelegenheid/<string:branche_code>')
+# @api.doc(params={'branche_code': {'description': 'Code van de branche'},
+#                  'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string', 'required' : 'True'}})
+# class WerkgelegenheidFrame(Resource):
+#     def get(self, branche_code):
+#         klasse = str(request.args.get('klasse'))
+#         return werkgelegenheidAPI(branche_code, klasse)
 print("Alles is geladen, je kan nu de browser controleren.")

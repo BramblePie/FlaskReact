@@ -1,8 +1,8 @@
 from Helper_functions import *
 
 # Dataset inlezen
-file = "raw-data/Vestigingen__gemeente.csv"
-postcode_file = "raw-data/gemeenten-provincie.xlsx"
+file = "flask-backend/raw-data/Vestigingen__gemeente.csv"
+postcode_file = "flask-backend/raw-data/gemeenten-provincie.xlsx"
 data_pc = pd.read_excel(postcode_file)
 data_vg = pd.read_csv(file, sep=";")
 

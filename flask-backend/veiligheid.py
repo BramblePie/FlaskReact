@@ -53,8 +53,6 @@ data_veiligheid_incl_provincie['Aantal_misdrijven_geklasseerd'] = np.select([m1,
 misdrijven_df = data_veiligheid_incl_provincie
 misdrijven_df
 
-# Functions zijn ready
-print("Functions ready")
 
 # Define functions
 def veiligheidAPI(plaats):
@@ -62,4 +60,3 @@ def veiligheidAPI(plaats):
     resultaat = misdrijven_df.loc[(misdrijven_df["Regio's"] == plaats)]
     return resultaat.to_dict(orient="split")
 
-#Klaar
