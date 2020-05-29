@@ -10,7 +10,7 @@ from veiligheid import veiligheidAPI
 from demografie_gemeente import DemografieAPI_gemeenten
 from wozwaarde import wozwaardeAPI
 from werkgelegenheid import werkgelegenheidAPI
-# from recreatie import recreatieAPI
+from recreatie import recreatieAPI
 
 print("modeling")
 print("prep")
@@ -69,23 +69,25 @@ def veiligheid_form_post():
 @app.route('/wozwaarde', methods=['POST'])
 def wozwaarde_form_post():
     text = request.form['text']
-    df_wozwaarde = veiligheidAPI(text)
+    df_wozwaarde = wozwaardeAPI(text)
     json_wozwaarde = table_converter(df_wozwaarde)
     return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde)   
 
-@app.route('/recreatie', methods=['POST'])
-def recreatie_form_post():
-    text = request.form['text']
-    df_recreatie = veiligheidAPI(text)
-    json_recreatie = table_converter(df_recreatie)
-    return render_template ('Recreatie.html', title='Recreatie', json_recreatie=json_recreatie) 
+# @app.route('/recreatie', methods=['POST'])
+# def recreatie_form_post():
+#    text = request.form['text']
+#    text2 = request.form['text2']
+#    df_recreatie = recreatieAPI(text, text2)
+#    json_recreatie = table_converter(df_recreatie)
+#    return render_template ('Recreatie.html', title='Recreatie', json_recreatie=json_recreatie) 
 
-@app.route('/werkgelegenheid', methods=['POST'])
-def werkgelegenheid_form_post():
-    text = request.form['text']
-    df_werkgelegenheid = veiligheidAPI(text)
-    json_werkgelegenheid = table_converter(df_werkgelegenheid)
-    return render_template ('Werkgelegenheid.html', title='Werkgelegenheid', json_werkgelegenheid=json_werkgelegenheid) 
+# @app.route('/werkgelegenheid', methods=['POST'])
+# def werkgelegenheid_form_post():
+#    text = request.form['text']
+#    text2 = request.form['text2']
+#    df_werkgelegenheid = werkgelegenheidAPI(text, text2)
+#    json_werkgelegenheid = table_converter(df_werkgelegenheid)
+#    return render_template ('Werkgelegenheid.html', title='Werkgelegenheid', json_werkgelegenheid=json_werkgelegenheid) 
 
 # API Controllers
 import random, math
