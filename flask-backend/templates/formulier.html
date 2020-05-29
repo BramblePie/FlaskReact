@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Frontend-Formulier</title>
+</head>
+<body>
+<br>
+<label for="wozinput">Kies een WOZ-waarde:</label>
+<select name= wozinput method="GET" action="/" required>
+    {% for woz in wozinput %}
+    <option value= "{{woz}}" SELECTED>{{woz}}</option>"
+    {% endfor %}
+</select>
+<br>    
+<label for="misdaadinput">Kies een het aantal criminaliteit:</label>
+<select name= misdaadinput method="GET" action="/" required>
+    {% for misdaad in misdaadinput %}
+    <option value= "{{misdaad}}" SELECTED>{{misdaad}}</option>"
+    {% endfor %}
+</select>
+<br>    
+<label for="stedelijkheidinput">Kies de stedelijkheid:</label>
+<select name= stedelijkheidinput method="GET" action="/" required>
+    {% for stedelijkheid in stedelijkheidinput %}
+    <option value= "{{stedelijkheid}}" SELECTED>{{stedelijkheid}}</option>"
+    {% endfor %}
+</select>
+<br>    
+<label for="Bedrijfstakinput">Kies de bedrijfstak waar u in werkt:</label>
+<select name= Bedrijfstakinput method="GET" action="/" required>
+    {% for Bedrijfstak in Bedrijfstakinput %}
+    <option value= "{{Bedrijfstak}}" SELECTED>{{Bedrijfstak}}</option>"
+    {% endfor %}
+</select>
+<br>    
+<label for="werkgelegenheidinput">Kies hoeveel werkgelegenheid in de gekozen tak :</label>
+<select name= werkgelegenheidinput method="GET" action="/" required>
+    {% for werkgelegenheid in werkgelegenheidinput %}
+    <option value= "{{werkgelegenheid}}" SELECTED>{{werkgelegenheid}}</option>"
+    {% endfor %}
+</select>
+
+</body>
+</html>
