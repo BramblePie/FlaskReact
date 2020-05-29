@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>output-Formulier</title>
+</head>
+<body>
+    <h1>Dit zijn gemeentes die voeldoen aan uw wensen</h1>
+<br>
+{% for table in tables %}
+            {{titles[loop.index]}}
+            {{ table|safe }}
+{% endfor %}
+</body>
+</html>
