@@ -5,7 +5,7 @@ from flask_restplus import Api, Resource
 import notebooks.data_prep as notebook
 import prep as notebookn
 
-from werkgelegenheid import werkgelegenheidAPI
+from werkgelegenheid import werkgelegenheidAPI, werkgelegenheid_plaatsAPI
 
 print("modeling")
 print("prep")
@@ -50,8 +50,13 @@ class AantalInwoners(Resource):
 
 @api.route('/werkgelegenheid/<string:branche_code>')
 @api.doc(params={'branche_code': {'description': 'Code van de branche'},
-                 'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string', 'required' : 'True'}})
+                 'klasse': {'description': 'Klasse van het aantal branches', 'in': 'query', 'type': 'string', 'required': 'True'}})
 class WerkgelegenheidFrame(Resource):
     def get(self, branche_code):
         klasse = str(request.args.get('klasse'))
         return werkgelegenheidAPI(branche_code, klasse)              
+
+@api.route('/werkgelegenheid/<string:plaats>')
+class WerkgelegenheidPlaats(Resource):
+    def get(self, plaats):
+        return werkgelegenheid_plaatsAPI(plaats)   

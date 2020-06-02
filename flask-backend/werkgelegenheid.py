@@ -10,8 +10,8 @@ from prep import movecol
 pd.set_option('display.max_rows', 50)
 
 # Dataset inlezen
-file = "raw-data/Vestegingen_Gemeente.csv"
-postcode_file = "raw-data/gemeenten-provincie.xlsx"
+file = "raw-data\Vestigingen__gemeente.csv"
+postcode_file = "raw-data\gemeenten-provincie.xlsx"
 data_pc = pd.read_excel(postcode_file)
 data_vg = pd.read_csv(file, sep=";")
 
@@ -67,10 +67,11 @@ werkgelegenheid_geprept = movecol(samenvoegen_df, cols_to_move=['Bedrijfstak_cod
 
 werkgelegenheid_df= werkgelegenheid_geprept.drop(columns='Bedrijfstakken/branches SBI 2008')
 
-werkgelegenheid_df
-
 
 def werkgelegenheidAPI(branche_code, klasse):
     resultaat = werkgelegenheid_df.loc[((werkgelegenheid_df["Bedrijfstak_code"] == branche_code) & (werkgelegenheid_df["Vestigingen Klasse"] == klasse))]
     return resultaat.to_dict(orient="records")
 
+def werkgelegenheid_plaatsAPI(plaats):
+    plaats_resultaat = werkgelegenheid_df.loc[werkgelegenheid_df["Regio's"] == plaats]
+    return plaats_resultaat.to_dict(orient="index")
