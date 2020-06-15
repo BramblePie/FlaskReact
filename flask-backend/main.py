@@ -10,7 +10,7 @@ from veiligheid import veiligheidAPI
 from demografie_gemeente import DemografieAPI_gemeenten
 from wozwaarde import wozwaardeAPI
 from werkgelegenheid import werkgelegenheidAPI, werkgelegenheid_plaatsAPI
-from recreatie import recreatieAPI
+# from recreatie import recreatieAPI
 from formulier import formulierAPI
 
 print("modeling")
@@ -99,13 +99,13 @@ def wozwaarde_form_post():
     json_wozwaarde = table_converter(df_wozwaarde)
     return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde)   
 
-@app.route('/recreatie', methods=['POST'])
-def recreatie_form_post():
-   text = request.form['text']
-   text2 = request.form['text2']
-   df_recreatie = recreatieAPI(text, text2)
-   json_recreatie = table_converter(df_recreatie)
-   return render_template ('Recreatie.html', title='Recreatie', json_recreatie=json_recreatie) 
+# @app.route('/recreatie', methods=['POST'])
+# def recreatie_form_post():
+#    text = request.form['text']
+#    text2 = request.form['text2']
+#    df_recreatie = recreatieAPI(text, text2)
+#    json_recreatie = table_converter(df_recreatie)
+#    return render_template ('Recreatie.html', title='Recreatie', json_recreatie=json_recreatie) 
 
 @app.route('/werkgelegenheid', methods=['POST'])
 def werkgelegenheid_form_post():
