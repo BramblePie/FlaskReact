@@ -10,7 +10,7 @@ from veiligheid import veiligheidAPI
 from demografie_gemeente import DemografieAPI_gemeenten
 from wozwaarde import wozwaardeAPI
 from werkgelegenheid import werkgelegenheidAPI, werkgelegenheid_plaatsAPI
-# from recreatie import recreatieAPI
+from recreatie import recreatieAPI
 from formulier import formulierAPI
 
 print("modeling")
@@ -45,8 +45,7 @@ def Formulier():
     werkgelegenheidinput = ['Hoog', 'Geen', 'Middel-Hoog', 'Middel']
     return render_template('Formulier.html', misdaadinput=misdaadinput,wozinput=wozinput,stedelijkheidinput=stedelijkheidinput,werkgelegenheidinput=werkgelegenheidinput)
 
-    # Bedrijfstakinput=Bedrijfstakinput
-
+    
 @app.route('/formulieroutput', methods=['POST'])
 def formulieroutput():
     wozinput = request.form["wozinput"]
@@ -57,7 +56,7 @@ def formulieroutput():
     output = formulierAPI(stedelijkheidinput,wozinput,werkgelegenheidinput,misdaadinput)
     return render_template("Formulieroutput.html",tables=[output.to_html(classes='data',index = False)], titles=output.columns.values)
 
-# ,Bedrijfstakinput
+
 
 @app.route('/demografie')
 def Statistieken():
@@ -100,13 +99,13 @@ def wozwaarde_form_post():
     json_wozwaarde = table_converter(df_wozwaarde)
     return render_template ('Wozwaarde.html', title='Wozwaarde', json_wozwaarde=json_wozwaarde)   
 
-# @app.route('/recreatie', methods=['POST'])
-# def recreatie_form_post():
-#    text = request.form['text']
-#    text2 = request.form['text2']
-#    df_recreatie = recreatieAPI(text, text2)
-#    json_recreatie = table_converter(df_recreatie)
-#    return render_template ('Recreatie.html', title='Recreatie', json_recreatie=json_recreatie) 
+@app.route('/recreatie', methods=['POST'])
+def recreatie_form_post():
+   text = request.form['text']
+   text2 = request.form['text2']
+   df_recreatie = recreatieAPI(text, text2)
+   json_recreatie = table_converter(df_recreatie)
+   return render_template ('Recreatie.html', title='Recreatie', json_recreatie=json_recreatie) 
 
 @app.route('/werkgelegenheid', methods=['POST'])
 def werkgelegenheid_form_post():
@@ -152,11 +151,12 @@ class WozwaardeFrame(Resource):
         """Get all wozwaarde bij een bepaalde gemeente"""
         return wozwaardeAPI(gemeente)
 
-@api.route("/demografie_gemeente/<string:text>")
-class DemografiegemeenteFrame(Resource):
-    def get (self, text):
-        """Functie gemeente demografie"""
-        return DemografieAPI_gemeenten(text)
+# Work in progress
+# @api.route("/demografie_gemeente/<string:text>")
+# class DemografiegemeenteFrame(Resource):
+#     def get (self, text):
+#         """Functie gemeente demografie"""
+#         return DemografieAPI_gemeenten(text)
 
 # Ik mis een raw data file voor dit
 # @api.route('/recreatie/<string:recreatie>')
@@ -180,10 +180,10 @@ class WerkgelegenheidPlaats(Resource):
     def get(self, plaats):
         return werkgelegenheid_plaatsAPI(plaats)
 
-print("Alles is geladen, je kan nu de browser controleren.")
+print("Alles is geladen")
 
 
-# Demografie_Gemeente API fixen, krijgt geen output
+
 # Veiligheid API fixen, verkeerde format die teruggegeven wordt
 # Werkgelegenheid API fixen
 # Recreatie toevoegen, gehele api en misschien nieuwe api maken op basis van gemeente
